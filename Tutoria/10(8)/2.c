@@ -20,7 +20,7 @@ typedef struct{
 typedef struct{
     Aluno alunos[30];
     int controleAlunos;
-    char qualTurma[30];
+    char nomeTurma[30];
 }Turma;
 
 typedef struct{
@@ -101,9 +101,9 @@ void fazLeitura(){
         printf("\nTRUMA: %i\n", i+1);
 
         printf("Digite o nome da turma: ");
-        fgets(escola.turmas[i].qualTurma, 30, stdin);
+        fgets(escola.turmas[i].nomeTurma, 30, stdin);
 
-        escola.turmas[i].qualTurma[strlen(escola.turmas[i].qualTurma)-1] = '\0';
+        escola.turmas[i].nomeTurma[strlen(escola.turmas[i].nomeTurma)-1] = '\0';
 
         printf("Digite a quantidade de Alunos: ");
         scanf("%i", &escola.turmas[i].controleAlunos);
