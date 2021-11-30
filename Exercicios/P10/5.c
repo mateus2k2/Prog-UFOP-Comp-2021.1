@@ -2,42 +2,57 @@
 //Matrícula: 2114156
 //Turma  41
 
-#include <assert.h>
-#include <ctype.h>
-#include <locale.h>
-#include <math.h>
-#include <setjmp.h>
-#include <signal.h>
-#include <stdarg.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <time.h>
+#define MAX 256
 
+int main() {
+    int num;
+    FILE *fp1, *fp2;
+    char ch, src[MAX], tgt[MAX];
 
-int main(int argc, char *argv[ ]){
-    double mediaNota = 0, mediaFreq = 0, percentAprov = 0;
-    int quantidade;
-    char nomeAquivo[100];
+    printf("Digite o nome do arquivo de entrada:"); scanf("%s", src);
+    printf("Digite o nome do arquivo de saida:"); scanf("%s", tgt);
 
-    printf("Digite o nome do arquivo: "); fgets(nomeAquivo, 100, stdin);
-    nomeAquivo[strlen(nomeAquivo)-1] = '\0';
-    FILE *arquivo = fopen(nomeAquivo, "r");
+    fp1 = fopen(src, "r");
 
-    fscanf(arquivo, "%i", &quantidade);
+    if(!fp1) {
+        printf("Erro ao abrir arquivo!!\n");
+        return 0;
+    }
+
+    fp2 = fopen(tgt, "wb");
+
+    if(!fp2){
+        printf("Erro ao abrir arquivo!!\n");
+        return 0;
+    }
+  
+    while(!feof(fp1)) {
+        fread(&ch, sizeof(char), 1, fp1);
+        num = ch;
+        fwrite(&num, sizeof(int), 1, fp2);
+    }
 
     double tmpNota;
     int tmpFreq;
     char aprovados[50][100];
+
+    double mediaNota = 0, mediaFreq = 0, percentAprov = 0;
+    int quantidade;
+    char nomeAquivo[100];
+
+    fread(&quantidade, sizeof(int), 1, fp2);
+
     for (int i = 0, j = 0; i < quantidade; i++){
-        fseek(arquivo, 1, SEEK_CUR);
-        fgets(aprovados[j], 100, arquivo);
+        fseek(fp2, 1, SEEK_CUR);
+        fread(&aprovados[j], sizeof(char), 100, fp2);
         aprovados[j][strlen(aprovados[j])-1] = '\0';
 
-        fscanf(arquivo, "%lf", &tmpNota);
+        fread(&tmpNota, sizeof(double), 1, fp2);
         mediaNota = tmpNota + mediaNota;
         
-        fscanf(arquivo, "%i", &tmpFreq);
+        fread(&tmpFreq, sizeof(int), 1, fp2);
         mediaFreq = tmpFreq + mediaFreq;
 
         if(tmpNota < 60 && tmpFreq < 15){ 
@@ -67,7 +82,7 @@ int main(int argc, char *argv[ ]){
 
     printf("\n");
 
-    fclose(arquivo);
-
+    fclose(fp1);
+    fclose(fp2);
     return 0;
 }
