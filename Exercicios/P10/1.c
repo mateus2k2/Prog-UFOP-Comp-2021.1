@@ -33,10 +33,6 @@ int compara(Racional r1, Racional r2){
             mdc2 = i;
     }
 
-    printf("r1: %i/%i   %i\n", r1.numerador/mdc1, r1.denominador/mdc1, mdc1);
-    printf("r2: %i/%i   %i\n", r2.numerador/mdc2, r2.denominador/mdc2, mdc2);
-
-
     if(r1.numerador/mdc1 == r2.numerador/mdc2 && r1.denominador/mdc1 == r2.denominador/mdc2)
         return 1;
 
