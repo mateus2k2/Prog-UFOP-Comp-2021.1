@@ -46,6 +46,29 @@ Complexo multComplexo(Complexo c1, Complexo c2){
     return mult;
 }
 
+void printComplexo(Complexo resultado){
+    if(resultado.a > 0 && resultado.b > 0)
+            printf("Resultado: %i + (%ii)\n", resultado.a, resultado.b);
+    else if(resultado.a > 0 && resultado.b < 0)
+            printf("Resultado: %i - (%ii)\n", resultado.a, -resultado.b);
+    else if(resultado.a < 0 && resultado.b < 0)
+            printf("Resultado: %i - (%ii)\n", resultado.a, -resultado.b);
+    else if(resultado.a < 0 && resultado.b > 0)
+            printf("Resultado: %i + (%ii)\n", resultado.a, resultado.b);
+    else if(resultado.a == 0 && resultado.b > 0)
+            printf("Resultado: (%ii)\n", resultado.b);
+    else if(resultado.a == 0 && resultado.b < 0)
+            printf("Resultado: (%ii)\n", resultado.b);
+    else if(resultado.a > 0 && resultado.b == 0)
+            printf("Resultado: %i\n", resultado.a);
+    else if(resultado.a < 0 && resultado.b == 0)
+            printf("Resultado: %i\n", resultado.a);
+    else if(resultado.a == 0 && resultado.b == 0)
+            printf("Resultado: 0\n");
+        
+
+}
+
 int main(int argc, char *argv[ ]){
 
     Complexo c1, c2, resultado;
@@ -60,21 +83,20 @@ int main(int argc, char *argv[ ]){
 
     if(op == '+'){
         resultado = somaComplexo(c1, c2);
-        printf("Resultado: %i + (%ii)\n", resultado.a, resultado.b);
+        printComplexo(resultado);
     }    
     else if(op == '-'){
         resultado = subComplexo(c1, c2);
-        printf("Resultado: %i + (%ii)\n", resultado.a, resultado.b);
+        printComplexo(resultado);
     }
     else if(op == '*'){
         resultado = multComplexo(c1, c2);
-        printf("Resultado: %i + (%ii)\n", resultado.a, resultado.b);
+        printComplexo(resultado);
 
     }
     else
         printf("Operados Invalido\n");
-    
-
 
     return 0;
 }
+

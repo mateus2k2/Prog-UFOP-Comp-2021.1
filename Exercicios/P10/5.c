@@ -10,15 +10,18 @@ int main() {
 
     double tmpNota;
     int tmpFreq;
-    char aprovados[50][100];
+    char maiorMedia[50][100];
 
     double mediaNota = 0, mediaFreq = 0, percentAprov = 0;
     int quantidade;
 
     FILE *texto, *dat;
 
+    //Lendo nome do arquivo
     printf("Digite o nome do arquivo texto: "); scanf("%s", arquivoTxt);
 
+
+    //Copiando e gerando o nome do arquivo .dat
     for (int i = 0, j = 0; i < strlen(arquivoTxt)+1; i++){
         if(i < strlen(arquivoTxt)-4)
             arquivoDat[i] = arquivoTxt[i];
@@ -28,29 +31,31 @@ int main() {
         }         
     }   
 
+    //Abrindo os arquivos e monstando erro caso não abra
+    //O .dat oara escrita e o de .txt para leitura
     texto = fopen(arquivoTxt, "r");
 
     if(!texto) {
-        printf("Erro ao abrir arquivo!!\n");
-        return 0;
+        printf("Erro ao abrir arquivo!!\n"); return 0;
     }
 
     dat = fopen(arquivoDat, "wb");
 
     if(!dat){
-        printf("Erro ao abrir arquivo!!\n");
-        return 0;
+        printf("Erro ao abrir arquivo!!\n"); return 0;
     }
 
+    //Lendo e escrevendo primeira linha do arquivo de texto referente a quantidade de alunos que se espera 
     fscanf(texto, "%i", &quantidade);
     fwrite(&quantidade, sizeof(int), 1, dat);
 
+    //Convertendo do arquivo texto para o arquivo binario
     for (int i = 0, j = 0; i < quantidade; i++, j++){
         fseek(texto, 1, SEEK_CUR);
 
-        fgets(aprovados[i], 100, texto);
-        fwrite(&aprovados[i], sizeof(char), 100, dat);
-        aprovados[i][strlen(aprovados[i])-1] = '\0';
+        fgets(maiorMedia[i], 100, texto);
+        fwrite(&maiorMedia[i], sizeof(char), 100, dat);
+        maiorMedia[i][strlen(maiorMedia[i])-1] = '\0';
 
         fscanf(texto, "%lf", &tmpNota);
         fwrite(&tmpNota, sizeof(double), 1, dat);
@@ -60,20 +65,23 @@ int main() {
 
     }
 
+    //'Limpando' as variaveis tmp e a string de alunos com nota maior que media
+    //Mais para teste doque algum motivo prático 
     for (int i = 0; i < 50; i++)
         for (int j = 0; j < 100; j++)
-            aprovados[i][j] = '-';
-
+            maiorMedia[i][j] = '-';
     tmpFreq = 0;
     tmpNota = 0; 
 
+    //Fechando o arquivo dat e abrindo de novo para leitura
     fclose(dat);
     dat = fopen(arquivoDat, "rb");
     fread(&quantidade, sizeof(int), 1, dat);
     
+    //Agora percorrendo o arquivo .dat para ler as informações e armazena-las
     for (int i = 0, j = 0; i < quantidade; i++){
 
-        fread(&aprovados[i], sizeof(char), 100, dat);
+        fread(&maiorMedia[i], sizeof(char), 100, dat);
 
         fread(&tmpNota, sizeof(double), 1, dat);
         mediaNota = tmpNota + mediaNota;
@@ -81,10 +89,10 @@ int main() {
         fread(&tmpFreq, sizeof(int), 1, dat);
         mediaFreq = tmpFreq + mediaFreq;
 
+        //Determiani alunos aprovados com essa condição ja que não faz sentido um aluno ser aprovado por ter nota maior que a media da sala
         if(tmpNota >= 60 && tmpFreq >= 15){ 
             percentAprov++;
-        }
-        
+        }        
     }
 
     mediaNota = mediaNota/quantidade;
@@ -95,39 +103,41 @@ int main() {
     printf("\nFrequencia media: %.2lf", mediaFreq);
     printf("\nPercentual de aprovacao: %.2f%c \n", percentAprov, '%');
 
+    //Fechando o arquivo dat e abrindo de novo para leitura para percorre-lo novamente
     fclose(dat);
     dat = fopen(arquivoDat, "rb");
     fread(&quantidade, sizeof(int), 1, dat);
 
+    //'Limpando' as variaveis tmp e a string de de alunos com nota maior que media
+    //Mais para teste doque algum motivo prático 
     for (int i = 0; i < 50; i++)
         for (int j = 0; j < 100; j++)
-            aprovados[i][j] = '\0';
-
+            maiorMedia[i][j] = '\0';
     tmpFreq = 0;
     tmpNota = 0; 
 
+    //Lendo o arquivo .dat Agora para determinar os alunos com nota mior que a media
     for (int i = 0, j = 0; i < quantidade; i++){
 
-        fread(&aprovados[j], sizeof(char), 100, dat);
-        aprovados[j][strlen(aprovados[j])-1] = '\0';
+        fread(&maiorMedia[j], sizeof(char), 100, dat);
+        maiorMedia[j][strlen(maiorMedia[j])-1] = '\0';
 
         fread(&tmpNota, sizeof(double), 1, dat);
                 
         fread(&tmpFreq, sizeof(int), 1, dat);
         
         if(tmpNota < mediaNota){ 
-            aprovados[j][0] = '\0';
+            maiorMedia[j][0] = '\0';
         }
         else{
             j++;
         }
     }
 
-
     printf("\nNomes dos alunos com nota acima da nota media:");
     for (int i = 0; i < quantidade; i++){
-        if(aprovados[i][0] != '\0')
-            printf("\nNome: %s", aprovados[i]);
+        if(maiorMedia[i][0] != '\0')
+            printf("\nNome: %s", maiorMedia[i]);
     }
 
     printf("\n");

@@ -20,20 +20,25 @@ int main(int argc, char *argv[ ]){
     int quantidade;
     char nomeAquivo[100];
 
+    double tmpNota;
+    int tmpFreq;
+    char maiorMedia[50][100];
+
+    //Lendo o nome e abrindo o arquivo
     printf("Digite o nome do arquivo: "); fgets(nomeAquivo, 100, stdin);
     nomeAquivo[strlen(nomeAquivo)-1] = '\0';
     FILE *arquivo = fopen(nomeAquivo, "r");
 
+    //Lendo primeira linha do arquivo de texto referente a quantidade de alunos que se espera 
     fscanf(arquivo, "%i", &quantidade);
 
-    double tmpNota;
-    int tmpFreq;
-    char aprovados[50][100];
+
+    //Agora percorrendo o arquivo .txt para ler as informações e armazena-las
     for (int i = 0, j = 0; i < quantidade; i++){
         fseek(arquivo, 1, SEEK_CUR);
 
-        fgets(aprovados[i], 100, arquivo);
-        aprovados[i][strlen(aprovados[i])-1] = '\0';
+        fgets(maiorMedia[i], 100, arquivo);
+        maiorMedia[i][strlen(maiorMedia[i])-1] = '\0';
 
         fscanf(arquivo, "%lf", &tmpNota);
         mediaNota = tmpNota + mediaNota;
@@ -41,6 +46,7 @@ int main(int argc, char *argv[ ]){
         fscanf(arquivo, "%i", &tmpFreq);
         mediaFreq = tmpFreq + mediaFreq;
 
+        //Determiani alunos aprovados com essa condição ja que não faz sentido um aluno ser aprovado por ter nota maior que a media da sala
         if(tmpNota >= 60 && tmpFreq >= 15){ 
             percentAprov++;
         }
@@ -55,30 +61,34 @@ int main(int argc, char *argv[ ]){
     printf("\nFrequencia media: %.2lf", mediaFreq);
     printf("\nPercentual de aprovacao: %.2f%c \n", percentAprov, '%');
 
+    //fechando e abrindo o arquivo para voltar para o começo
     fclose(arquivo);
     arquivo = fopen(nomeAquivo, "r");
 
+    //'Limpando' as variaveis tmp e a string de alunos com nota maior que media
+    //Mais para teste doque algum motivo prático 
     for (int i = 0; i < 50; i++)
         for (int j = 0; j < 100; j++)
-            aprovados[i][j] = '\0';
-
+            maiorMedia[i][j] = '\0';
     tmpFreq = 0;
     tmpNota = 0; 
 
+    //Lendo primeira linha do arquivo de texto referente a quantidade de alunos que se espera 
     fscanf(arquivo, "%i", &quantidade);
 
+    //Lendo o arquivo .dat Agora para determinar os alunos com nota mior que a media
     for (int i = 0, j = 0; i < quantidade; i++){
         fseek(arquivo, 1, SEEK_CUR);
 
-        fgets(aprovados[j], 100, arquivo);
-        aprovados[j][strlen(aprovados[j])-1] = '\0';
+        fgets(maiorMedia[j], 100, arquivo);
+        maiorMedia[j][strlen(maiorMedia[j])-1] = '\0';
 
         fscanf(arquivo, "%lf", &tmpNota);
         
         fscanf(arquivo, "%i", &tmpFreq);
 
         if(tmpNota < mediaNota){ 
-            aprovados[j][0] = '\0';
+            maiorMedia[j][0] = '\0';
         }
         else{
             j++;
@@ -87,8 +97,8 @@ int main(int argc, char *argv[ ]){
 
     printf("\nNomes dos alunos com nota acima da nota media:");
     for (int i = 0; i < quantidade; i++){
-        if(aprovados[i][0] != '\0')
-            printf("\nNome: %s", aprovados[i]);
+        if(maiorMedia[i][0] != '\0')
+            printf("\nNome: %s", maiorMedia[i]);
     }
 
     printf("\n");
