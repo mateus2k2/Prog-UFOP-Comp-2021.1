@@ -18,7 +18,8 @@ int main() {
     FILE *texto, *dat;
 
     //Lendo nome do arquivo
-    printf("Digite o nome do arquivo texto: "); scanf("%s", arquivoTxt);
+    printf("Digite o nome do arquivo texto: "); fgets(arquivoTxt, 100, stdin);
+    arquivoTxt[strlen(arquivoTxt)-1] = '\0';
 
 
     //Copiando e gerando o nome do arquivo .dat
