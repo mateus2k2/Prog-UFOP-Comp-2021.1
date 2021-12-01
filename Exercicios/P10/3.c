@@ -20,6 +20,25 @@ typedef struct{
     int frequencia;
 }Aluno;
 
+//Formato do arquivo
+/*
+5
+Mateus
+60.000000
+20
+Filipe
+30.000000
+20
+Moreira
+80.000000
+5
+Silva
+10.000000
+10
+Matos
+80.000000
+20
+*/
 
 int main(int argc, char *argv[]){
     Aluno alunos[100];
