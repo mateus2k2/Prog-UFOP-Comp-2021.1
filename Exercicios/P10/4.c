@@ -31,8 +31,9 @@ int main(int argc, char *argv[ ]){
     char aprovados[50][100];
     for (int i = 0, j = 0; i < quantidade; i++){
         fseek(arquivo, 1, SEEK_CUR);
-        fgets(aprovados[j], 100, arquivo);
-        aprovados[j][strlen(aprovados[j])-1] = '\0';
+
+        fgets(aprovados[i], 100, arquivo);
+        aprovados[i][strlen(aprovados[i])-1] = '\0';
 
         fscanf(arquivo, "%lf", &tmpNota);
         mediaNota = tmpNota + mediaNota;
@@ -40,11 +41,7 @@ int main(int argc, char *argv[ ]){
         fscanf(arquivo, "%i", &tmpFreq);
         mediaFreq = tmpFreq + mediaFreq;
 
-        if(tmpNota < 60 && tmpFreq < 15){ 
-            aprovados[j][0] = '\0';
-        }
-        else{
-            j++;
+        if(tmpNota >= 60 && tmpFreq >= 15){ 
             percentAprov++;
         }
         
@@ -52,12 +49,41 @@ int main(int argc, char *argv[ ]){
 
     mediaNota = mediaNota/quantidade;
     mediaFreq = mediaFreq/quantidade;
-    percentAprov = (percentAprov/quantidade) * 100;
+    percentAprov = (percentAprov/(double)quantidade) * 100.0;
 
     printf("\nNota media: %.2lf", mediaNota);
     printf("\nFrequencia media: %.2lf", mediaFreq);
-    printf("\nPercentual de aprovacao: %.0lf%c \n", percentAprov, '%');
+    printf("\nPercentual de aprovacao: %.2f%c \n", percentAprov, '%');
 
+    fclose(arquivo);
+    arquivo = fopen(nomeAquivo, "r");
+
+    for (int i = 0; i < 50; i++)
+        for (int j = 0; j < 100; j++)
+            aprovados[i][j] = '\0';
+
+    tmpFreq = 0;
+    tmpNota = 0; 
+
+    fscanf(arquivo, "%i", &quantidade);
+
+    for (int i = 0, j = 0; i < quantidade; i++){
+        fseek(arquivo, 1, SEEK_CUR);
+
+        fgets(aprovados[j], 100, arquivo);
+        aprovados[j][strlen(aprovados[j])-1] = '\0';
+
+        fscanf(arquivo, "%lf", &tmpNota);
+        
+        fscanf(arquivo, "%i", &tmpFreq);
+
+        if(tmpNota < mediaNota){ 
+            aprovados[j][0] = '\0';
+        }
+        else{
+            j++;
+        }   
+    }
 
     printf("\nNomes dos alunos com nota acima da nota media:");
     for (int i = 0; i < quantidade; i++){
