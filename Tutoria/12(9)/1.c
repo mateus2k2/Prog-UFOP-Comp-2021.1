@@ -19,9 +19,10 @@ typedef struct{
 
 int main(int argc, char *argv[ ]){
     matrizes matriz1, matriz2;
+    int **mult;
+
     FILE *arquivo = fopen("matrizes.txt", "r");
     FILE *arquivoDat = fopen("matrizes.dat", "w");
-    int **mult;
 
     for (int t = 0; fscanf(arquivo, "%i %i", &matriz1.lin, &matriz1.col) != EOF; t++){
         //------------------------------------------------------------------------
@@ -73,7 +74,7 @@ int main(int argc, char *argv[ ]){
                     mult[i][j] = 0;
                 }
             }
-
+        
             for (int i = 0; i < matriz1.lin; i++){
                 for (int j = 0; j < matriz2.col; j++){
                     for (int k = 0; k < matriz1.col; k++){
@@ -86,7 +87,7 @@ int main(int argc, char *argv[ ]){
             }
                      
         }
-        else
+        //else
             //printf("\nMatrizes tem tamanho errados");
 
 
