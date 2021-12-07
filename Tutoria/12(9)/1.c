@@ -69,14 +69,10 @@ int main(int argc, char *argv[ ]){
             for (int i = 0; i < matriz1.lin; i++)
                 mult[i] = malloc(matriz2.col* sizeof(int*));
 
-            for (int i = 0; i < matriz1.lin; ++i) {
-                for (int j = 0; j < matriz2.col; ++j) {
-                    mult[i][j] = 0;
-                }
-            }
         
             for (int i = 0; i < matriz1.lin; i++){
                 for (int j = 0; j < matriz2.col; j++){
+                    mult[i][j] = 0;
                     for (int k = 0; k < matriz1.col; k++){
                         mult[i][j] = mult[i][j] + (matriz1.mat[i][k] * matriz2.mat[k][j]);
                     }
@@ -91,18 +87,15 @@ int main(int argc, char *argv[ ]){
             //printf("\nMatrizes tem tamanho errados");
 
 
-        for (int i = 0; i < matriz1.lin; i++){
+        for (int i = 0; i < matriz1.lin; i++)
             free(matriz1.mat[i]);
-        }
-            free(matriz1.mat);
-        for (int i = 0; i < matriz2.lin; i++){
+        free(matriz1.mat);
+        for (int i = 0; i < matriz2.lin; i++)
             free(matriz2.mat[i]);
-        }
-            free(matriz2.mat);
-        for (int i = 0; i < matriz1.lin; i++){
+        free(matriz2.mat);
+        for (int i = 0; i < matriz1.lin; i++)
             free(mult[i]);
-        }
-            free(mult);
+        free(mult);
         
     }
 
