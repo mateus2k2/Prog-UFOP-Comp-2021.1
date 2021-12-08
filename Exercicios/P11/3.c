@@ -14,7 +14,39 @@
 #include <string.h>
 #include <time.h>
 
-int multiplica_matrizes(int ***resultado, int **matA, int linA, int colA, int **matB, int linB, int colB);
+int multiplica_matrizes(int ***resultado, int **matA, int linA, int colA, int **matB, int linB, int colB){
+
+
+    if(colA == linB){
+
+        // *resultado = malloc(linA * sizeof(int*));
+        // for (int i = 0; i < linA; i++)
+        //     *resultado[i] = malloc(colB * sizeof(int*));
+
+        printf("\n");
+
+        for (int i = 0; i < linA; i++){
+            for (int j = 0; j < colB; j++){
+                *resultado[i][j] = 0;
+                for (int k = 0; k < colA; k++){
+                    *resultado[i][j] = *resultado[i][j] + ((matA[i][k]) * (matB[k][j]));
+                }
+            }
+        }
+
+        printf("\nMultiplicada: \n");
+        for (int i = 0; i < linA; i++){
+            for (int j = 0; j < colB; j++){
+                printf("%i ", *resultado[i][j]);
+            }        
+            printf("\n");
+        }
+
+        return 1;
+    }
+    else
+        return 0;
+}
 
 int main(int argc, char *argv[ ]){
     int **matA, **matB, **resultado;
@@ -47,7 +79,10 @@ int main(int argc, char *argv[ ]){
         }        
     }
 
-    multiplica_matrizes(&resultado, matA, linA, colA, matB, linB, colB);
+    resultado = malloc(linA * sizeof(int*));
+    for (int i = 0; i < linA; i++)
+        resultado[i] = malloc(colB * sizeof(int*));
+
     printf("\n");
 
     printf("\nMatrizA: \n");
@@ -66,13 +101,18 @@ int main(int argc, char *argv[ ]){
         printf("\n");
     }
 
-    printf("\nMultiplicada: \n");
-    for (int i = 0; i < linA; i++){
-        for (int j = 0; j < colB; j++){
-            printf("%i ", resultado[i][j]);
-        }        
-        printf("\n");
+    if (multiplica_matrizes(&resultado, matA, linA, colA, matB, linB, colB) == 1){
+
+        printf("\nMultiplicada: \n");
+        for (int i = 0; i < linA; i++){
+            for (int j = 0; j < colB; j++){
+                printf("%i ", resultado[i][j]);
+            }        
+            printf("\n");
+        }
     }
+    else
+        printf("Nao e possivle multiplcia matrizes");
 
     for (int i = 0; i < linA; i++)
         free(matA[i]);
@@ -91,29 +131,6 @@ int main(int argc, char *argv[ ]){
     return 0;
 }
 
-int multiplica_matrizes(int ***resultado, int **matA, int linA, int colA, int **matB, int linB, int colB){
 
-    if(colA == linB){
-
-        *resultado = malloc(linA * sizeof(int*));
-        for (int i = 0; i < linA; i++)
-            *resultado[i] = malloc(colB * sizeof(int*));
-
-        for (int i = 0; i < linA; i++){
-            for (int j = 0; j < colB; j++){
-                *resultado[i][j] = 0;
-                for (int k = 0; k < colA; k++){
-                    *resultado[i][j] = *resultado[i][j] + ((matA[i][k]) * (matB[k][j]));
-                }
-                printf("%i ", *resultado[i][j]);
-            }
-            printf("\n");                
-        }
-
-        return 1;
-    }
-    else
-        return 0;
-}
 
 // ./3.exe < entrada.txt
