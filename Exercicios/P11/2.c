@@ -64,6 +64,8 @@ int main(int argc, char *argv[ ]){
 double** cria_matriz(int lin, int col){
     double** mat;
 
+    
+
     mat = malloc(lin * sizeof(int*));
     for (int i = 0; i < lin; i++)
         mat[i] = malloc(col * sizeof(int*));    
