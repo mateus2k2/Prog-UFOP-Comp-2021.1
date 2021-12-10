@@ -1,0 +1,26 @@
+#include <math.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+//Biblioteca Arquivo???
+
+
+//Remover \n do final da string
+palavra[strlen(palavra)-1] = '\0';
+
+//Remover \n do input do teclado
+while ((getchar()) != '\n');
+
+//Alocaçao Dinamica
+malloc 
+alloc 
+andar frente e tras
+Alocar matriz
+
+//Arquivo txt
+fscanf
+fprintf
+
+//Arquivo dat
+fwrite
+fread
