@@ -2,8 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-//Biblioteca Arquivo???
-
 
 //Remover \n do final da string
 palavra[strlen(palavra)-1] = '\0';
@@ -12,15 +10,63 @@ palavra[strlen(palavra)-1] = '\0';
 while ((getchar()) != '\n');
 
 //Alocaçao Dinamica
-malloc 
-alloc 
-andar frente e tras
-Alocar matriz
+int *vet = malloc(n * sizeof(int)); 
+int *vet = calloc(n * sizeof(int)); //Inicializa com 0
+
+//Alocar Vetor Retornando Endereço
+int **alocaMat(int*** mat, int lin, int col){
+    int i;
+    *mat = (int**)malloc(lin*sizeof(int*));
+    for( i=0; i<lin; i++)
+        (*mat)[i] = (int*)malloc(col*sizeof(int));
+}
+
+//Alocar Matriz Retornando Endereço
+int **criaMatriz(int n, int m){
+    int **matriz;
+    *matriz = (int**)malloc(lin*sizeof(int*));
+    for( i=0; i<lin; i++)
+        (*matriz)[i] = (int*)malloc(col*sizeof(int));
+}
+
+//Alocar Matriz Retornando void *** (& na chamada)
+void alocaMat(int*** mat, int lin, int col){
+    int i;
+    *mat = (int**)malloc(lin*sizeof(int*));
+    for( i=0; i<lin; i++)
+        (*mat)[i] = (int*)malloc(col*sizeof(int));
+}
+
+//Libera Matriz Retornando Void *** (& na chamada)
+void liberaMat(int*** mat, int lin){
+    int i;
+    for (i = 0; i < lin; i++)
+        free((*mat)[i]);
+    free(*mat); 
+}
+
+//Libera Vetor Retornando Void *** (& na chamada)
+void liberaVet(int*** vet){
+    free(*vet); 
+}
+
+//
+r
+w
+rb
+wb
 
 //Arquivo txt
-fscanf
-fprintf
+FILE *fp = fopen("file.txt","r");
+fscanf(&fp, "%s %s", &letra1 &letra2); //Ler do Arquivo
+fprintf(fp, "%s %s", &letra1 &letra2) //Escrever no Arquivo
 
 //Arquivo dat
-fwrite
-fread
+FILE *fp = fopen("file.dat","rb");
+fwrite(&numero, sizeof(int), 1, fp); //Escrever no arquivo
+fread(&numero, sizeof(int), 1, fp); //Ler do arquivo
+
+//Mover
+fseek(FILE *file, int offset, SEEK_CUR); //Andar na Arquivo
+long int ftell(FILE *file); //Posicao Atual
+fclose(file);
