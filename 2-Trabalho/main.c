@@ -32,6 +32,8 @@ typedef struct{
 
 
 int main(int argc, char *argv[ ]){
+    time_t t;   
+    srand((unsigned) time(&t));
 
     printf("Bem vindo ao Caca Palavras");
     menu();
@@ -71,12 +73,11 @@ void menu(){
 }
 
 void criarJogo(){
-    char **tabuleiro;
-    char *resposta;
+    Tabuleiro **tabuleiro;
+    Palavra *resposta;
 
     int tamLin, tamCol, quantidade, dificuldade;
-    int escolhaDirecao, escolhaColocar;
-    char escolhaLetra;
+    int escolhaDirecao, escolhaColocar, escolhaLetra;
 
     //---------------------------------------------------------------------------------------------
     
@@ -85,10 +86,12 @@ void criarJogo(){
     //Mostar erro se caso nao conseguir abrir o arquivo e perguntar se quer sair do jogo
 
     fscanf(dicionario, "%i %i", &tamLin, &tamCol);
-    alocaMat(&tabuleiro, tamLin, tamCol);
+    tabuleiro = (Tabuleiro**)malloc(tamLin*sizeof(Tabuleiro*));
+    for(int i = 0; i < tamLin; i++)
+        (tabuleiro)[i] = (Tabuleiro*)malloc(tamCol*sizeof(Tabuleiro));
 
     fscanf(dicionario, "%i", &quantidade);
-    resposta = malloc(quantidade * sizeof(char));
+    resposta = malloc(quantidade * sizeof(Palavra));
     
     //---------------------------------------------------------------------------------------------
 
@@ -103,21 +106,23 @@ void criarJogo(){
         scanf("%i", &dificuldade);
         switch (dificuldade){
         case 1:
-            criarJogo();
-            break;
+            dificuldade = 1; break;
         case 2:
-            /* code */
-            break;
+            dificuldade = 2; break;
         case 3:
-            /* code */
-            break;
+            dificuldade = 3; break;
         default: printf("Opcao Invalida. Tente Novamente: ");
             break;
         }
     }
+
     //---------------------------------------------------------------------------------------------
 
-    for (int i = 0; i < 0; i++){
+    for (int i = 0; i > 0; i++){
+        escolhaColocar = rand() % (3);
+        escolhaDirecao = rand() % (3);
+        escolhaLetra = rand() % (3);
+
         
     }
 
