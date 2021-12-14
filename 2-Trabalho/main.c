@@ -19,17 +19,9 @@ void colocaPalavra();
 
 typedef struct{
     char *palavra;
-    char cordenada[4];
-    int direcao;
-}Palavra;
-
-typedef struct{
-    char letra;
+    char cordenada[5];
     int marcado;
-    int fazPartePalavra;
-}Tabuleiro;
-
-
+}Palavra;
 
 int main(int argc, char *argv[ ]){
     time_t t;   
@@ -73,8 +65,8 @@ void menu(){
 }
 
 void criarJogo(){
-    Tabuleiro **tabuleiro;
-    Palavra *resposta;
+    char **tabuleiro;
+    Palavra *palavras;
 
     int tamLin, tamCol, quantidade, dificuldade;
     int escolhaDirecao, escolhaColocar, escolhaLetra;
@@ -86,12 +78,12 @@ void criarJogo(){
     //Mostar erro se caso nao conseguir abrir o arquivo e perguntar se quer sair do jogo
 
     fscanf(dicionario, "%i %i", &tamLin, &tamCol);
-    tabuleiro = (Tabuleiro**)malloc(tamLin*sizeof(Tabuleiro*));
+    tabuleiro = (char**)malloc(tamLin*sizeof(char*));
     for(int i = 0; i < tamLin; i++)
-        (tabuleiro)[i] = (Tabuleiro*)malloc(tamCol*sizeof(Tabuleiro));
+        (tabuleiro)[i] = (char*)malloc(tamCol*sizeof(char));
 
     fscanf(dicionario, "%i", &quantidade);
-    resposta = malloc(quantidade * sizeof(Palavra));
+    palavras = malloc(quantidade * sizeof(Palavra));
     
     //---------------------------------------------------------------------------------------------
 
@@ -118,15 +110,30 @@ void criarJogo(){
 
     //---------------------------------------------------------------------------------------------
 
-    for (int i = 0; i > 0; i++){
-        escolhaColocar = rand() % (3);
-        escolhaDirecao = rand() % (3);
-        escolhaLetra = rand() % (3);
+    for (int i = 0; i > tamLin; i++){
+        for (int j = 0; j < tamCol; j++){
+            if(dificuldade == 1){
+                escolhaColocar = rand() % (3);
+                escolhaDirecao = rand() % (3);
+                escolhaLetra = rand() % (3);
+            }
 
+            else if(dificuldade == 2){
+                
+            }
+
+            else{
+                
+            }
         
-    }
-
+        }       
+    }   
 }
+
+void colocaPalavra(){
+    
+}
+
 
 void alocaMat(char*** mat, int lin, int col){
     int i;
