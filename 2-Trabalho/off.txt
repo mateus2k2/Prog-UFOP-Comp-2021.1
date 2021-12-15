@@ -1,0 +1,31 @@
+    printf("\n");        
+    for (int i = 0; i < tamLin; i++){
+        for (int j = 0; j < tamCol; j++){
+            printf("%c ", (*tabuleiro)[i][j]);        
+        }       
+        printf("\n");      
+    } 
+
+    // printf("\n%i", escolhaDirecao);
+    // printf("\n%i", *contColocadas);
+    // printf("\n%i", lim);
+    // printf("\n%i", col);
+    // printf("\n%i", tamLin);
+    // printf("\n%i", tamCol);
+
+    // for (int i = 0; i < 5; i++){
+    //     puts(palavras[i].palavra);
+    // }
+
+    // puts(palavras[(*contColocadas)].palavra);
+
+    // printf("\n%li",strlen(palavras[(*contColocadas)].palavra));
+    // printf("\n%li",strlen(palavras[(*contColocadas)].palavra));
+
+    // printf("\n%c",  palavras[(*contColocadas)].palavra[0]);
+
+
+
+    // matriz1.mat = malloc(matriz1.lin * sizeof(int*));
+    // for (int i = 0; i < matriz1.lin; i++)
+            // matriz1.mat[i] = malloc(matriz1.col * sizeof(int*)); 

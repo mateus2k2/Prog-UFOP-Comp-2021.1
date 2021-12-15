@@ -9,19 +9,52 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <unistd.h>
+
+typedef struct{
+    char palavra[100];
+    int marcado;
+    int linC, colC;
+    int linF, colF
+}Palavra;
+
+typedef struct{
+    char caractere;
+    int fazPartePalavra;
+}Item;
+
+//Marcar os itens preenchidos por palavra como fazPartePalavra;
+//Caso uma posicão fassa parte palavra verificar se e a mesma letra caso nao for não contar nos marcados e pular 
 
 void alocaMat(char*** mat, int lin, int col);
 void liberaMat(char*** mat, int n);
 
 void menu();
 void criarJogo();
-void colocaPalavra();
+void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int tamLin, int tamCol, Palavra *palavras ,Item **tabuleiro);
+void verificaEscolha();
+void resolveTabuleiro();
+void continuaJogo();
+void converterCoordenada();
 
-typedef struct{
-    char *palavra;
-    char cordenada[5];
-    int marcado;
-}Palavra;
+
+
+//Mostar erro se caso nao conseguir abrir o arquivo e perguntar se quer sair do jogo
+//Mostar erro se caso nao conseguir fazer malloc
+//Erro caso palavra seja impossivel de caber no tabuleiro
+//Não chegando na ultima palavra
+//Caso de palavras se interceptando em lugares indevidos
+//Converteer minusculo maiusculo
+
+//Qual o tamanho maximo das palavras
+//Palavras podem ter espaço?
+
+//if strlem(palavras[contColocadas].palavra) > Maior espaco disponivel no tabuleiro
+//printf palavra é muito grande para o tabuleiro
+//contColocadas++; 
+
+//no semicolon at end of struct or union in c
+
 
 int main(int argc, char *argv[ ]){
     time_t t;   
@@ -29,6 +62,8 @@ int main(int argc, char *argv[ ]){
 
     printf("Bem vindo ao Caca Palavras");
     menu();
+
+    printf("\n");
 
     return 0;
 }
@@ -45,7 +80,7 @@ void menu(){
 
     //Sair do Jogo == Sair do programa
     printf("Escolha a opcao (digite ”sair” em qualquer lugar para sair do jogo): ");
-    while (1){
+    while (escolha != 1 && escolha != 2 && escolha != 3){
         scanf("%i", &escolha);
         switch (escolha){
         case 1:
@@ -61,15 +96,14 @@ void menu(){
             break;
         }
     }
-
 }
 
 void criarJogo(){
-    char **tabuleiro;
+    Item **tabuleiro;
     Palavra *palavras;
 
     int tamLin, tamCol, quantidade, dificuldade;
-    int escolhaDirecao, escolhaColocar, escolhaLetra;
+    int escolhaDirecao = 0, escolhaColocar, escolhaLetra, contColocadas = 0;
 
     //---------------------------------------------------------------------------------------------
     
@@ -78,9 +112,9 @@ void criarJogo(){
     //Mostar erro se caso nao conseguir abrir o arquivo e perguntar se quer sair do jogo
 
     fscanf(dicionario, "%i %i", &tamLin, &tamCol);
-    tabuleiro = (char**)malloc(tamLin*sizeof(char*));
+    tabuleiro = (Item**)malloc(tamLin*sizeof(Item*));
     for(int i = 0; i < tamLin; i++)
-        (tabuleiro)[i] = (char*)malloc(tamCol*sizeof(char));
+        (tabuleiro)[i] = (Item*)malloc(tamCol*sizeof(Item));
 
     fscanf(dicionario, "%i", &quantidade);
     palavras = malloc(quantidade * sizeof(Palavra));
@@ -97,41 +131,174 @@ void criarJogo(){
     while (dificuldade != 1 && dificuldade != 2 && dificuldade != 3){
         scanf("%i", &dificuldade);
         switch (dificuldade){
-        case 1:
-            dificuldade = 1; break;
-        case 2:
-            dificuldade = 2; break;
-        case 3:
-            dificuldade = 3; break;
+        case 1: dificuldade = 1; break;
+        case 2: dificuldade = 2; break;
+        case 3: dificuldade = 3; break;
         default: printf("Opcao Invalida. Tente Novamente: ");
             break;
         }
     }
 
     //---------------------------------------------------------------------------------------------
+   
+    //Qual o tamanho maximo das palavras
+    //Palavras podem ter espaço?
+    for (int i = 0; i < quantidade+1; i++){
+        fgets(palavras[i].palavra, 100, dicionario);
 
-    for (int i = 0; i > tamLin; i++){
-        for (int j = 0; j < tamCol; j++){
-            if(dificuldade == 1){
-                escolhaColocar = rand() % (3);
-                escolhaDirecao = rand() % (3);
-                escolhaLetra = rand() % (3);
-            }
+        if(i != quantidade)
+            palavras[i].palavra[strlen(palavras[i].palavra)-1] = '\0';
+    } 
 
-            else if(dificuldade == 2){
+    // for (int i = 0; i < quantidade+1; i++){
+    //     for (int j = 0; j < strlen(palavras[i].palavra); j++){
+    //         palavras[i].palavra[j] = palavras[i].palavra[j] - 32;
+    //         printf("%c ", palavras[i].palavra[j]);   
+    //     }        
+    //     printf("\n"); 
+    // } 
+
+    // pause();
+
+    printf("-------%i", contColocadas);
+
+    pause();    
+
+    //---------------------------------------------------------------------------------------------
+
+    while (1){
+       
+        for (int i = 0; i < tamLin; i++){
+            for (int j = 0; j < tamCol; j++){
+                escolhaLetra = rand() % (26);
+                tabuleiro[i][j].caractere = escolhaLetra + 'A';
+                tabuleiro[i][j].fazPartePalavra == 0;
+            }       
+        }
+
+
+        for (int i = 0; i < tamLin; i++){
+            for (int j = 0; j < tamCol; j++){
                 
-            }
+                //Dificuldade 1
+                if(dificuldade == 1){
+                    escolhaDirecao = rand() % (2);
+                    escolhaColocar = rand() % (100);
 
-            else{
-                
+                    if(contColocadas != quantidade && escolhaColocar >= 90){
+                        colocaPalavra(escolhaDirecao, &contColocadas, i, j, tamLin, tamCol, palavras, tabuleiro);
+                    }
+
+                }
+
+                //Dificuldade 2
+                else if(dificuldade == 2){
+                  
+                }
+
+                //Dificuldade 3
+                else{
+                   
+                }
+
+                if(quantidade == contColocadas)
+                    break;
             }
+            if(quantidade == contColocadas)
+                break;       
+        }
+
+        if(quantidade == contColocadas)
+            break; 
+        else
+            contColocadas = 0;
         
+    }
+    
+    //---------------------------------------------------------------------------------------------
+    
+
+    printf("\n");        
+    for (int i = 0; i < tamLin; i++){
+        for (int j = 0; j < tamCol; j++){
+            printf("%c ", tabuleiro[i][j].caractere);        
         }       
-    }   
+        printf("\n");        
+
+    } 
+
 }
 
-void colocaPalavra(){
-    
+void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int tamLin, int tamCol, Palavra *palavras ,Item **tabuleiro){
+
+    printf("\n");        
+    for (int i = 0; i < tamLin; i++){
+        for (int j = 0; j < tamCol; j++){
+            printf("%c ", (tabuleiro)[i][j].caractere);      
+        }       
+        printf("\n");      
+    } 
+
+    printf("-------%i", *contColocadas);
+
+    pause();    
+
+    if(escolhaDirecao == 0 && col + strlen(palavras[(*contColocadas)].palavra) <= tamCol){
+        printf("\n------%li-------", strlen(palavras[(*contColocadas)].palavra));
+        for (int i = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i++, j++){
+            printf("****** %i ********", tabuleiro[lim][i].fazPartePalavra);
+            if(tabuleiro[lim][i].fazPartePalavra == 0 || tabuleiro[lim][i].caractere == palavras[(*contColocadas)].palavra[j]){
+                tabuleiro[lim][i].caractere = palavras[(*contColocadas)].palavra[j];     
+                tabuleiro[lim][i].fazPartePalavra = 1;
+                printf("\n----");
+            }
+            else 
+                break;
+            if(j == strlen(palavras[(*contColocadas)].palavra) - 1)
+                (*contColocadas)++;
+        }
+    }
+
+    else if(escolhaDirecao == 1 && lim + strlen(palavras[(*contColocadas)].palavra) <= tamLin){
+        printf("\n------%li-------", strlen(palavras[(*contColocadas)].palavra));
+        for (int i = lim, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i++, j++){
+            printf("****** %i ********", tabuleiro[lim][i].fazPartePalavra);
+            if(tabuleiro[i][col].fazPartePalavra == 0 || tabuleiro[i][col].caractere == palavras[(*contColocadas)].palavra[j]){
+                tabuleiro[i][col].caractere = palavras[(*contColocadas)].palavra[j];
+                tabuleiro[lim][i].fazPartePalavra = 1;
+                printf("\n----");
+            }
+            else 
+                break;
+            if(j == strlen(palavras[(*contColocadas)].palavra) - 1)
+                (*contColocadas)++;
+        }
+    }
+
+    else if(escolhaDirecao == 2){
+        
+    }
+
+    else if(escolhaDirecao == 3){
+        
+    }
+
+    else if(escolhaDirecao == 4){
+        
+    }
+
+    else if(escolhaDirecao == 5){
+        
+    }
+
+    else if(escolhaDirecao == 6){
+        
+    }
+
+    else{
+        
+    }
+
 }
 
 
