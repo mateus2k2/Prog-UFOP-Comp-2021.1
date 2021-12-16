@@ -67,8 +67,7 @@
 typedef struct{
     char palavra[100];
     int marcado;
-    int linC, colC;
-    int linF, colF
+    int tamnho;
 }Palavra;
 
 typedef struct{
@@ -76,8 +75,11 @@ typedef struct{
     int fazPartePalavra;
 }Item;
 
-//Marcar os itens preenchidos por palavra como fazPartePalavra;
-//Caso uma posicão fassa parte palavra verificar se e a mesma letra caso nao for não contar nos marcados e pular 
+typedef struct{
+    char nomeComando;
+    int limC, colC;
+    int limF, colF;
+}Comando;
 
 void alocaMat(char*** mat, int lin, int col);
 void liberaMat(char*** mat, int n);
@@ -89,27 +91,7 @@ void verificaEscolha();
 void resolveTabuleiro();
 void continuaJogo();
 void converterCoordenada();
-
-
-
-//Mostar erro se caso nao conseguir abrir o arquivo e perguntar se quer sair do jogo
-//Mostar erro se caso nao conseguir fazer malloc
-
-//Erro caso palavra seja impossivel de caber no tabuleiro
-//Qual o tamanho maximo das palavras?
-//Palavras podem ter espaço?
-
-//Time out na criacao do tabuleiro
-//Tem que ter a direcao especifica na dificuldade
-//Numero de palavra menor que o numero de direcoes
-//Converter pra maiuscula so se precisar
-//Validar tamanho do da matris (Nao pode ser maior que 26 por 26)
-
-//if strlem(palavras[contColocadas].palavra) > Maior espaco disponivel no tabuleiro
-//printf palavra é muito grande para o tabuleiro
-//contColocadas++; 
-
-//no semicolon at end of struct or union in c
+void salvaJogo();
 
 
 int main(int argc, char *argv[ ]){
@@ -178,7 +160,6 @@ void criarJogo(){
 
     fscanf(dicionario, "%i", &quantidade);
     palavras = malloc(quantidade * sizeof(Palavra));
-    //quantidade = quantidade + 1;
     //---------------------------------------------------------------------------------------------
 
     printf("\nDigite o nivel de dificuldade:\n");
@@ -200,9 +181,7 @@ void criarJogo(){
     }
 
     //---------------------------------------------------------------------------------------------
-   
-    //Qual o tamanho maximo das palavras
-    //Palavras podem ter espaço?
+
     fgets(lixo, 100, dicionario);
     for (int i = 0; i < quantidade; i++){
         fgets(palavras[i].palavra, 100, dicionario);
@@ -211,15 +190,16 @@ void criarJogo(){
             palavras[i].palavra[strlen(palavras[i].palavra)-1] = '\0';
         }
     } 
-    
-    //Converter pra maiuscula so se precisar
+
     for (int i = 0; i < quantidade; i++){
         for (int j = 0; j < strlen(palavras[i].palavra); j++){
-            palavras[i].palavra[j] = palavras[i].palavra[j] - 32;
+            if(palavras[i].palavra[j] >= 'a' && palavras[i].palavra[j] <= 'z')
+                palavras[i].palavra[j] = palavras[i].palavra[j] - 32;
         }        
     } 
 
     //---------------------------------------------------------------------------------------------
+    
     for (int i = 0; i < 8; i++)
         contDirecao[i] = 0;
 
@@ -261,21 +241,20 @@ void criarJogo(){
 
                 //Dificuldade 3
                 else{
-                    escolhaDirecao = rand() % (4);
+                    escolhaDirecao = rand() % (8);
                     escolhaColocar = rand() % (100);
 
                     if(escolhaColocar >= 90){
                         colocaPalavra(escolhaDirecao, &contColocadas, i, j, tamLin, tamCol, palavras, tabuleiro, contDirecao);
                     }
 
-                    if(quantidade == contColocadas && contDirecao[0] != 0 && contDirecao [1] != 0 && contDirecao[2] != 0){
+                    if(quantidade == contColocadas && contDirecao[0] != 0 && contDirecao [1] != 0 && contDirecao[2] != 0 && contDirecao[7] != 0){
                         feito = 1;
                         break;
                     }
-                   
                 }
-
             }
+
             if(feito == 1)
                 break;       
         }
@@ -284,7 +263,7 @@ void criarJogo(){
 
         else{
             contColocadas = 0;
-            feito == 0;
+            feito = 0;
             for (int l = 0; l < tamLin; l++){
                 for (int k = 0; k < tamCol; k++){
                     escolhaLetra = rand() % (26);
@@ -293,9 +272,7 @@ void criarJogo(){
                 }       
             }
             for (int i = 0; i < 8; i++)
-                contDirecao[i] = 0;
-            
-
+                contDirecao[i] = 0;  
         }        
     }
 
@@ -318,7 +295,7 @@ void criarJogo(){
 void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int tamLin, int tamCol, Palavra *palavras, Item **tabuleiro, int *contDirecao){
     int aprovado = 1;
 
-    //----------------------------------------------------------------------------------------------------- 0
+    //-----------------------------------------------------------------------------------------------------0 
     if(escolhaDirecao == 0 && col + strlen(palavras[(*contColocadas)].palavra) <= tamCol){
 
         for (int i = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i++, j++){
@@ -334,12 +311,12 @@ void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int
                 tabuleiro[lim][i].fazPartePalavra = 1;
             }
             (*contColocadas)++;
+            contDirecao[0] = contDirecao[0] + 1;
         }
         aprovado = 1;
-        (contDirecao[0])++;
     }
 
-    //----------------------------------------------------------------------------------------------------- 1 
+    //-----------------------------------------------------------------------------------------------------1
 
     else if(escolhaDirecao == 1 && lim + strlen(palavras[(*contColocadas)].palavra) <= tamLin){
 
@@ -357,14 +334,14 @@ void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int
                 tabuleiro[i][col].fazPartePalavra = 1;
             }
             (*contColocadas)++;
+            contDirecao[1] = contDirecao[1] + 1;
         }
         aprovado = 1;
-        (contDirecao[1])++;
     }
 
-    //----------------------------------------------------------------------------------------------------- 2
+    //-----------------------------------------------------------------------------------------------------2
 
-    else if(escolhaDirecao == 2 && lim + strlen(palavras[(*contColocadas)].palavra) <= tamLin && col + strlen(palavras[(*contColocadas)].palavra) <= tamCol){
+   else if(escolhaDirecao == 2 && lim + strlen(palavras[(*contColocadas)].palavra) <= tamLin && col + strlen(palavras[(*contColocadas)].palavra) <= tamCol){
         for (int i = lim, k = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i++, j++, k++){
             if(tabuleiro[i][k].fazPartePalavra == 1){
                 aprovado = 0;
@@ -379,14 +356,15 @@ void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int
                 tabuleiro[i][k].fazPartePalavra = 1;
             }
             (*contColocadas)++;
+            contDirecao[2] = contDirecao[2] + 1;
         }
         aprovado = 1;
-        (contDirecao[2])++;
     }
 
-    //----------------------------------------------------------------------------------------------------- 3
+    //-----------------------------------------------------------------------------------------------------3
 
-    else if(escolhaDirecao == 3 && col + strlen(palavras[(*contColocadas)].palavra) <= tamCol && lim + strlen(palavras[(*contColocadas)].palavra) <= tamCol){
+    else if(escolhaDirecao == 3 && col + strlen(palavras[(*contColocadas)].palavra) <= tamCol && lim - (int)strlen(palavras[(*contColocadas)].palavra) >= 0){
+       
         for (int i = lim, k = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i--, j++, k++){
             if(tabuleiro[i][k].fazPartePalavra == 1){
                 aprovado = 0;
@@ -401,15 +379,59 @@ void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int
                 tabuleiro[i][k].fazPartePalavra = 1;
             }
             (*contColocadas)++;
+            contDirecao[3]++;
         }
         aprovado = 1;
-        (contDirecao[3])++;
     }
 
-    //----------------------------------------------------------------------------------------------------- 5
+    // //-----------------------------------------------------------------------------------------------------4
 
-    else if(escolhaDirecao == 4){
-        for (int i = lim, k = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i--, j++, k++){
+    else if(escolhaDirecao == 4 && lim - (int)strlen(palavras[(*contColocadas)].palavra) >= 0){
+        for (int i = lim, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i--, j++){
+            if(tabuleiro[i][col].fazPartePalavra == 1){
+                aprovado = 0;
+                break;
+            }
+        }
+
+        if(aprovado == 1){
+            
+            for (int i = lim, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i--, j++){
+                tabuleiro[i][col].caractere = palavras[(*contColocadas)].palavra[j];
+                tabuleiro[i][col].fazPartePalavra = 1;
+            }
+            (*contColocadas)++;
+            contDirecao[4] = contDirecao[4] + 1;
+        }
+        aprovado = 1;
+    }
+
+    // //-----------------------------------------------------------------------------------------------------5
+
+    else if(escolhaDirecao == 5 && col - (int)strlen(palavras[(*contColocadas)].palavra) >= 0){
+        for (int i = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i--, j++){
+            if(tabuleiro[i][lim].fazPartePalavra == 1){
+                aprovado = 0;
+                break;
+            }
+        }
+
+        if(aprovado == 1){
+            
+            for (int i = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i--, j++){
+                tabuleiro[i][lim].caractere = palavras[(*contColocadas)].palavra[j];
+                tabuleiro[i][lim].fazPartePalavra = 1;
+            }
+            (*contColocadas)++;
+            contDirecao[5] = contDirecao[5] + 1;
+        }
+        aprovado = 1;
+    }
+
+    // //-----------------------------------------------------------------------------------------------------6
+
+    else if(escolhaDirecao == 6 && lim - (int)strlen(palavras[(*contColocadas)].palavra) >= 0 && col + (int)strlen(palavras[(*contColocadas)].palavra) >= 0){
+        for (int i = lim, k = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i--, j++, k--){
             if(tabuleiro[i][k].fazPartePalavra == 1){
                 aprovado = 0;
                 break;
@@ -418,20 +440,20 @@ void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int
 
         if(aprovado == 1){
             
-            for (int i = lim, k = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i--, j++, k++){
+            for (int i = lim, k = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i--, j++, k--){
                 tabuleiro[i][k].caractere = palavras[(*contColocadas)].palavra[j];
                 tabuleiro[i][k].fazPartePalavra = 1;
             }
             (*contColocadas)++;
+            contDirecao[6] = contDirecao[6] + 1;
         }
         aprovado = 1;
-        (contDirecao[3])++;        
     }
 
-    //----------------------------------------------------------------------------------------------------- 6
+    // //-----------------------------------------------------------------------------------------------------7
 
-    else if(escolhaDirecao == 5){
-        for (int i = lim, k = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i--, j++, k++){
+    else if(escolhaDirecao == 7 && lim + strlen(palavras[(*contColocadas)].palavra) <= tamLin && col + (int)strlen(palavras[(*contColocadas)].palavra) >= 0){
+        for (int i = lim, k = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i++, j++, k--){
             if(tabuleiro[i][k].fazPartePalavra == 1){
                 aprovado = 0;
                 break;
@@ -440,61 +462,14 @@ void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int
 
         if(aprovado == 1){
             
-            for (int i = lim, k = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i--, j++, k++){
+            for (int i = lim, k = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i++, j++, k--){
                 tabuleiro[i][k].caractere = palavras[(*contColocadas)].palavra[j];
                 tabuleiro[i][k].fazPartePalavra = 1;
             }
             (*contColocadas)++;
+            contDirecao[7] = contDirecao[7] + 1;
         }
         aprovado = 1;
-        (contDirecao[3])++;        
     }
 
-    //----------------------------------------------------------------------------------------------------- 7
-
-    else if(escolhaDirecao == 6){
-        for (int i = lim, k = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i--, j++, k++){
-            if(tabuleiro[i][k].fazPartePalavra == 1){
-                aprovado = 0;
-                break;
-            }
-        }
-
-        if(aprovado == 1){
-            
-            for (int i = lim, k = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i--, j++, k++){
-                tabuleiro[i][k].caractere = palavras[(*contColocadas)].palavra[j];
-                tabuleiro[i][k].fazPartePalavra = 1;
-            }
-            (*contColocadas)++;
-        }
-        aprovado = 1;
-        (contDirecao[3])++;    
-    }
-
-    //----------------------------------------------------------------------------------------------------- 8
-
-    else{
-        
-    }
-
-    //(*contColocadas) = (*contColocadas) - 1;
-
-}
-
-
-void alocaMat(char*** mat, int lin, int col){
-    int i;
-    *mat = (char**)malloc(lin*sizeof(char*));
-    for( i=0; i<lin; i++)
-        (*mat)[i] = (char*)malloc(col*sizeof(char));
-
-    //Verificar e retornar erro se nao alocou direito
-} 
-
-void liberaMat(char*** mat, int lin){
-    int i;
-    for (i = 0; i < lin; i++)
-        free((*mat)[i]);
-    free(*mat); 
 }

@@ -1,34 +1,35 @@
-
-DAR ERRO
-Erro se caso nao conseguir abrir o arquivo e perguntar se quer sair do jogo
-Erro se caso nao conseguir fazer malloc
-Erro caso palavra seja impossivel de caber no tabuleiro
-
-PROBLEMAS
-Time out na criacao do tabuleiro (pode ter muitas palavras para um tabuleiro muito pequeno)
-Tem que ter a direcao especifica na dificuldade (Pelo menos uma)
-Validar tamanho do da matris (Nao pode ser maior que 26 por 26)
-Intersecao de 1 letra pode
-no semicolon at end of struct or union in c
-
-
-DUVIDAS
-Qual o tamanho maximo das palavras?
-Palavras podem ter espaço?
-
 IDEIAS
 if strlem(palavras[contColocadas].palavra) > Maior espaco disponivel no tabuleiro
     printf palavra é muito grande para o tabuleiro
     contColocadas++; 
 
+DAR ERRO
+
 
 A FAZER
-Usuario digitar o nome dos arquivos
+Usuario digitar o nome dos arquivos de saida
+Usuario digitar o nome dos arquivos de entrada 
 Grid colorido
 Verifica Escolha
 Resolve Tabuleiro
 Continua Jogo
-Converter Coordenada
+Interpreta Comando
 Salva Jogo
 Print instruções
 Arquivos .h e .c
+
+A FAZER
+Time out na criacao do tabuleiro (pode ter muitas palavras para um tabuleiro muito pequeno)
+Tentar mais vezes antes de resetar o tabuleiro
+Tem que ter a direcao especifica na dificuldade (Pelo menos uma)
+Intersecao de 1 letra pode
+Armazenar tamnaho das palavra
+no semicolon at end of struct or union in c
+
+EXTRA CHECKS
+Erro se caso nao conseguir abrir o arquivo
+Erro se caso nao conseguir fazer malloc
+Validar tamanho da matris (Nao pode ser maior que 26 por 26)
+Erro caso palavra seja impossivel de caber no tabuleiro (maior que lim ou col)
+Palavras podem ter espaço
+Palavra com acento
