@@ -20,16 +20,12 @@ Arquivos .h e .c
 
 A FAZER
 Time out na criacao do tabuleiro (pode ter muitas palavras para um tabuleiro muito pequeno)
-Tentar mais vezes antes de resetar o tabuleiro
+Ordenar cada as palavras (menor para a maior)
 Tem que ter a direcao especifica na dificuldade (Pelo menos uma)
-Intersecao de 1 letra pode
-Armazenar tamnaho das palavra
-no semicolon at end of struct or union in c
 
 EXTRA CHECKS
 Erro se caso nao conseguir abrir o arquivo
 Erro se caso nao conseguir fazer malloc
 Validar tamanho da matris (Nao pode ser maior que 26 por 26)
 Erro caso palavra seja impossivel de caber no tabuleiro (maior que lim ou col)
-Palavras podem ter espaço
-Palavra com acento
+Palavras podem ter espaço ou acento
