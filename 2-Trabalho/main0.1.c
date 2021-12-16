@@ -94,12 +94,16 @@ void converterCoordenada();
 
 //Mostar erro se caso nao conseguir abrir o arquivo e perguntar se quer sair do jogo
 //Mostar erro se caso nao conseguir fazer malloc
-//Erro caso palavra seja impossivel de caber no tabuleiro
 
-//Qual o tamanho maximo das palavras
+//Erro caso palavra seja impossivel de caber no tabuleiro
+//Qual o tamanho maximo das palavras?
 //Palavras podem ter espaço?
-//Tem que ter a direcao na dificuldade
+
+//Time out na criacao do tabuleiro
+//Tem que ter a direcao especifica na dificuldade
 //Numero de palavra menor que o numero de direcoes
+//Converter pra maiuscula so se precisar
+//Validar tamanho do da matris (Nao pode ser maior que 26 por 26)
 
 //if strlem(palavras[contColocadas].palavra) > Maior espaco disponivel no tabuleiro
 //printf palavra é muito grande para o tabuleiro
@@ -207,7 +211,8 @@ void criarJogo(){
             palavras[i].palavra[strlen(palavras[i].palavra)-1] = '\0';
         }
     } 
-
+    
+    //Converter pra maiuscula so se precisar
     for (int i = 0; i < quantidade; i++){
         for (int j = 0; j < strlen(palavras[i].palavra); j++){
             palavras[i].palavra[j] = palavras[i].palavra[j] - 32;
@@ -241,14 +246,14 @@ void criarJogo(){
 
                 //Dificuldade 2
                 else if(dificuldade == 2){
-                    escolhaDirecao = rand() % (4);
+                    escolhaDirecao = rand() % (3);
                     escolhaColocar = rand() % (100);
 
                     if(escolhaColocar >= 90){
                         colocaPalavra(escolhaDirecao, &contColocadas, i, j, tamLin, tamCol, palavras, tabuleiro, contDirecao);
                     }
 
-                    if(quantidade == contColocadas && contDirecao[0] != 0 && contDirecao [1] != 0 && contDirecao[2] != 0 && contDirecao[3] != 0){
+                    if(quantidade == contColocadas && contDirecao[0] != 0 && contDirecao [1] != 0 && contDirecao[2] != 0){
                         feito = 1;
                         break;
                     }
@@ -256,6 +261,17 @@ void criarJogo(){
 
                 //Dificuldade 3
                 else{
+                    escolhaDirecao = rand() % (4);
+                    escolhaColocar = rand() % (100);
+
+                    if(escolhaColocar >= 90){
+                        colocaPalavra(escolhaDirecao, &contColocadas, i, j, tamLin, tamCol, palavras, tabuleiro, contDirecao);
+                    }
+
+                    if(quantidade == contColocadas && contDirecao[0] != 0 && contDirecao [1] != 0 && contDirecao[2] != 0){
+                        feito = 1;
+                        break;
+                    }
                    
                 }
 
@@ -302,7 +318,7 @@ void criarJogo(){
 void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int tamLin, int tamCol, Palavra *palavras, Item **tabuleiro, int *contDirecao){
     int aprovado = 1;
 
-    //-----------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------- 0
     if(escolhaDirecao == 0 && col + strlen(palavras[(*contColocadas)].palavra) <= tamCol){
 
         for (int i = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i++, j++){
@@ -323,7 +339,7 @@ void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int
         (contDirecao[0])++;
     }
 
-    //-----------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------- 1 
 
     else if(escolhaDirecao == 1 && lim + strlen(palavras[(*contColocadas)].palavra) <= tamLin){
 
@@ -346,7 +362,7 @@ void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int
         (contDirecao[1])++;
     }
 
-    //-----------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------- 2
 
     else if(escolhaDirecao == 2 && lim + strlen(palavras[(*contColocadas)].palavra) <= tamLin && col + strlen(palavras[(*contColocadas)].palavra) <= tamCol){
         for (int i = lim, k = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i++, j++, k++){
@@ -368,7 +384,7 @@ void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int
         (contDirecao[2])++;
     }
 
-    //-----------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------- 3
 
     else if(escolhaDirecao == 3 && col + strlen(palavras[(*contColocadas)].palavra) <= tamCol && lim + strlen(palavras[(*contColocadas)].palavra) <= tamCol){
         for (int i = lim, k = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i--, j++, k++){
@@ -390,25 +406,73 @@ void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int
         (contDirecao[3])++;
     }
 
-    //-----------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------- 5
 
     else if(escolhaDirecao == 4){
-        
+        for (int i = lim, k = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i--, j++, k++){
+            if(tabuleiro[i][k].fazPartePalavra == 1){
+                aprovado = 0;
+                break;
+            }
+        }
+
+        if(aprovado == 1){
+            
+            for (int i = lim, k = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i--, j++, k++){
+                tabuleiro[i][k].caractere = palavras[(*contColocadas)].palavra[j];
+                tabuleiro[i][k].fazPartePalavra = 1;
+            }
+            (*contColocadas)++;
+        }
+        aprovado = 1;
+        (contDirecao[3])++;        
     }
 
-    //-----------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------- 6
 
     else if(escolhaDirecao == 5){
-        
+        for (int i = lim, k = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i--, j++, k++){
+            if(tabuleiro[i][k].fazPartePalavra == 1){
+                aprovado = 0;
+                break;
+            }
+        }
+
+        if(aprovado == 1){
+            
+            for (int i = lim, k = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i--, j++, k++){
+                tabuleiro[i][k].caractere = palavras[(*contColocadas)].palavra[j];
+                tabuleiro[i][k].fazPartePalavra = 1;
+            }
+            (*contColocadas)++;
+        }
+        aprovado = 1;
+        (contDirecao[3])++;        
     }
 
-    //-----------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------- 7
 
     else if(escolhaDirecao == 6){
-        
+        for (int i = lim, k = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i--, j++, k++){
+            if(tabuleiro[i][k].fazPartePalavra == 1){
+                aprovado = 0;
+                break;
+            }
+        }
+
+        if(aprovado == 1){
+            
+            for (int i = lim, k = col, j = 0; j < strlen(palavras[(*contColocadas)].palavra); i--, j++, k++){
+                tabuleiro[i][k].caractere = palavras[(*contColocadas)].palavra[j];
+                tabuleiro[i][k].fazPartePalavra = 1;
+            }
+            (*contColocadas)++;
+        }
+        aprovado = 1;
+        (contDirecao[3])++;    
     }
 
-    //-----------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------- 8
 
     else{
         
