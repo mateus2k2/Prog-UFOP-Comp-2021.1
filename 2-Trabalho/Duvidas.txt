@@ -1,12 +1,3 @@
-FUNÇÕES
-Verifica Escolha
-Resolve Tabuleiro
-Continua Jogo
-Interpreta Comando
-Salva Jogo
-Print instruções
-menu de dificuldade
-
 MELHORAR
 Timeout na criacao do tabuleiro (pode ter muitas palavras para um tabuleiro muito pequeno)
 Ordenar cada as palavras (menor para a maior)
@@ -14,11 +5,12 @@ Verificar Razão entre numero de palavras e tamanho da matriz (offset na hora de
 Struct coodernada
 
 MELHORAR IMPORTANTE
-fclose e free
-Arquivos .h e .c
+Conferir e testar as direcoes
 Ler nome do arquivo do usuario
 Grid colorido igual o do PDF (Mudar o fundo)
-
+sgmentation foult uma vez
+fclose e free
+Arquivos .h e .c
 
 EXTRA CHECKS
 Erro caso palavra seja impossivel de caber no tabuleiro (maior que lim ou col) (realloc)
@@ -34,9 +26,3 @@ Criar Tababuleiro
 Continurar Jogo
 Jogar
 Main
-
-//0 invalido
-//1 marcar
-//2 salvar
-//3 resolver
-//4 sair
