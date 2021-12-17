@@ -1,31 +1,42 @@
-IDEIAS
-if strlem(palavras[contColocadas].palavra) > Maior espaco disponivel no tabuleiro
-    printf palavra é muito grande para o tabuleiro
-    contColocadas++; 
-
-DAR ERRO
-
-
-A FAZER
-Usuario digitar o nome dos arquivos de saida
-Usuario digitar o nome dos arquivos de entrada 
-Grid colorido
+FUNÇÕES
 Verifica Escolha
 Resolve Tabuleiro
 Continua Jogo
 Interpreta Comando
 Salva Jogo
 Print instruções
-Arquivos .h e .c
+menu de dificuldade
 
-A FAZER
-Time out na criacao do tabuleiro (pode ter muitas palavras para um tabuleiro muito pequeno)
+MELHORAR
+Timeout na criacao do tabuleiro (pode ter muitas palavras para um tabuleiro muito pequeno)
 Ordenar cada as palavras (menor para a maior)
-Tem que ter a direcao especifica na dificuldade (Pelo menos uma)
+Verificar Razão entre numero de palavras e tamanho da matriz (offset na hora de escolhar colocar ou nao a capavra)
+Struct coodernada
+
+MELHORAR IMPORTANTE
+fclose e free
+Arquivos .h e .c
+Ler nome do arquivo do usuario
+Grid colorido igual o do PDF (Mudar o fundo)
+
 
 EXTRA CHECKS
-Erro se caso nao conseguir abrir o arquivo
-Erro se caso nao conseguir fazer malloc
-Validar tamanho da matris (Nao pode ser maior que 26 por 26)
-Erro caso palavra seja impossivel de caber no tabuleiro (maior que lim ou col)
-Palavras podem ter espaço ou acento
+Erro caso palavra seja impossivel de caber no tabuleiro (maior que lim ou col) (realloc)
+Palavras podem ter espaço ou acento no dicionario e palavra com 1 leetra e palavras repetidas
+Alocar palavras do dicionario dinamicamente (realloc)
+Palavra com acento no codigo
+Zerar palavras[i].marcado = 0 antes de jogar
+        
+
+ARQUIVOS
+Menus
+Criar Tababuleiro
+Continurar Jogo
+Jogar
+Main
+
+//0 invalido
+//1 marcar
+//2 salvar
+//3 resolver
+//4 sair
