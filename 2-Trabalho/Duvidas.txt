@@ -14,12 +14,11 @@ Arquivos .h e .c
 
 EXTRA CHECKS
 Erro caso palavra seja impossivel de caber no tabuleiro (maior que lim ou col) (realloc)
-Palavras podem ter espaço ou acento no dicionario e palavra com 1 leetra e palavras repetidas
+Palavras podem ter espaço, acento, 1 letra e repetidas
 Alocar palavras do dicionario dinamicamente (realloc)
 Palavra com acento no codigo
 Zerar palavras[i].marcado = 0 antes de jogar
         
-
 ARQUIVOS
 Menus
 Criar Tababuleiro
