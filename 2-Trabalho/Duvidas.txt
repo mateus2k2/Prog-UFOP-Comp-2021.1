@@ -1,20 +1,22 @@
-MELHORAR
+MELHORAR CRIAR TABULEIRO
 Timeout na criacao do tabuleiro (pode ter muitas palavras para um tabuleiro muito pequeno)
 Ordenar cada as palavras (menor para a maior)
 Verificar Razão entre numero de palavras e tamanho da matriz (offset na hora de escolhar colocar ou nao a capavra)
-Struct coodernada
 
-MELHORAR IMPORTANTE
+MELHORAR 
 Conferir e testar as direcoes
-Ler nome do arquivo do usuario
+Ler nome do arquivo do usuario (dicionario, restore)
+Implementar nome arquivo no save
 Grid colorido igual o do PDF (Mudar o fundo)
-sgmentation foult uma vez
-fclose e free
+Struct coodernada
+Lixo lendo arquivos (\n depois da quantidade de palavra)
+Função sair do jogo free em tudo
+Sgmentation foult uma vez
 Arquivos .h e .c
 
 EXTRA CHECKS
 Erro caso palavra seja impossivel de caber no tabuleiro (maior que lim ou col) (realloc)
-Palavras podem ter espaço, acento, 1 letra e repetidas
+Palavras podem ter espaço, acento, 1 letra e repetidas (Criar e continuar jogo)
 Alocar palavras do dicionario dinamicamente (realloc)
 Palavra com acento no codigo
 Zerar palavras[i].marcado = 0 antes de jogar

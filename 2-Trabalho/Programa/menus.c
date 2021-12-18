@@ -1,3 +1,3 @@
-void menu();
-void menuDificuldade();
-void printInstrucoes();
+// void menu();
+// void menuDificuldade();
+// void printInstrucoes();

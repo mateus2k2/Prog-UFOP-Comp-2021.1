@@ -11,6 +11,8 @@
 #include <time.h>
 #include <unistd.h>
 
+//**********************************************************************************************************************
+
 #define ANSI_RESET            "\x1b[0m"  // desativa os efeitos anteriores
 #define ANSI_BOLD             "\x1b[1m"  // coloca o texto em negrito
 #define ANSI_COLOR_BLACK      "\x1b[30m"
@@ -64,6 +66,8 @@
 #define TAB_MR  "\u252B" // ┫ (middle-right)
 #define TAB_BR  "\u251B" // ┛ (bottom-right)
 
+//**********************************************************************************************************************
+
 typedef struct{
     char palavra[100];
     int marcado;
@@ -80,24 +84,37 @@ typedef struct{
 
 typedef struct{
     int numeroComando;
+    char nomeArquivoSave[100];
     int limC, colC;
     int limF, colF;
 }Comando;
+
+//**********************************************************************************************************************
 
 void menu();
 void menuDificuldade();
 void printInstrucoes();
 
+//-----------------------------------------------------------------------------------------------------------------------
+
 void criarJogo();
 void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int tamLin, int tamCol, Palavra *palavras ,Item **tabuleiro, int *contDirecao);
+
+//-----------------------------------------------------------------------------------------------------------------------
 
 void jogar(Palavra *palavras ,Item **tabuleiro, int tamLin, int tamCol, int quantidade);
 Comando interpretaComando(char comandoCompleto[]);
 int verificaEscolha(Comando comando, Palavra *palavras ,Item **tabuleiro, int *encontradas, int quantidade, int tamCol, int tamLin);
 
-void resolveTabuleiro();
-void salvaJogo();
+//-----------------------------------------------------------------------------------------------------------------------
+
+void salvaJogo(int quantidade, int tamLin, int tamCol, Item **tabuleiro, Palavra *palavras, char nomeArquivoSave[]);
+void printResolvido(int tamLin, int tamCol, Item **tabuleiro);
 void continuaJogo();
+void resolveTabuleiro(int quantidade, int tamLin, int tamCol, Item **tabuleiro, Palavra *palavras);
+void sairJogo();
+
+//**********************************************************************************************************************
 
 int main(int argc, char *argv[ ]){
     time_t t;   
@@ -125,15 +142,17 @@ void menu(){
     printf("Escolha a opcao (digite ”sair” em qualquer lugar para sair do jogo): ");
     while (escolha != 1 && escolha != 2 && escolha != 3){
         scanf("%i", &escolha);
+        while ((getchar()) != '\n');
+
         switch (escolha){
         case 1:
             criarJogo();
             break;
         case 2:
-            /* code */
+            continuaJogo();
             break;
         case 3:
-            /* code */
+            printInstrucoes();
             break;
         default: printf("Opcao Invalida. Tente Novamente: ");
             break;
@@ -141,14 +160,17 @@ void menu(){
     }
 }
 
+void menuDificuldade(){
+    //menu
+}
+
 void criarJogo(){
     Item **tabuleiro;
     Palavra *palavras;
 
-    char lixo[100];
+    char tmp[2];
     int contDirecao[8] = {0};
     int feito = 0;
-    int retornoJogo;
 
     char nomeArquivo[100];
 
@@ -179,7 +201,7 @@ void criarJogo(){
     fscanf(dicionario, "%i", &quantidade);
     palavras = malloc(quantidade * sizeof(Palavra));
 
-    if(tabuleiro == NULL || dicionario == NULL){
+    if(tabuleiro == NULL || palavras == NULL){
         printf("\nErro.");
         return;
     }
@@ -196,19 +218,20 @@ void criarJogo(){
     printf("Escolha a opcao: ");
     while (dificuldade != 1 && dificuldade != 2 && dificuldade != 3){
         scanf("%i", &dificuldade);
+        while ((getchar()) != '\n');
+
         switch (dificuldade){
-        case 1: dificuldade = 1; break;
-        case 2: dificuldade = 2; break;
-        case 3: dificuldade = 3; break;
-        default: printf("Opcao Invalida. Tente Novamente: ");
-            break;
+            case 1: dificuldade = 1; break;
+            case 2: dificuldade = 2; break;
+            case 3: dificuldade = 3; break;
+            default: printf("Opcao Invalida. Tente Novamente: ");
+                break;
         }
     }
-    while ((getchar()) != '\n');
 
     //---------------------------------------------------------------------------------------------
 
-    fgets(lixo, 100, dicionario);
+    fgets(tmp, 2, dicionario);
     for (int i = 0; i < quantidade; i++){
         fgets(palavras[i].palavra, 100, dicionario);
 
@@ -315,27 +338,9 @@ void criarJogo(){
         }        
     }
 
+    fclose(dicionario);
+
     
-    //---------------------------------------------------------------------------------------------
-
-    printf("  ");
-    for (int i = 0; i < tamCol; i++)
-        printf(BLUE("%c "), 'A'+ i);
-
-    printf("\n");
-
-    for (int i = 0; i < tamLin; i++){
-        printf(BLUE("%c "), 'A'+ i);
-        for (int j = 0; j < tamCol; j++){
-            if(tabuleiro[i][j].fazPartePalavra == 1){
-                printf(BOLD(RED("%c ")), tabuleiro[i][j].caractere);
-            }
-            else
-                printf("%c ", tabuleiro[i][j].caractere);
-        }       
-        printf("\n");        
-    } 
-
     //---------------------------------------------------------------------------------------------
 
 
@@ -534,6 +539,26 @@ void jogar(Palavra *palavras ,Item **tabuleiro, int tamLin, int tamCol, int quan
 
     //---------------------------------------------------------------------------------------------
 
+    printf("\n");
+    
+    printf("  ");
+    for (int i = 0; i < tamCol; i++)
+        printf(BLUE("%c "), 'A'+ i);
+
+    printf("\n");
+
+    for (int i = 0; i < tamLin; i++){
+        printf(BLUE("%c "), 'A'+ i);
+        for (int j = 0; j < tamCol; j++){
+            if(tabuleiro[i][j].marcadoUsuario == 1){
+                printf(BOLD(YELLOW("%c ")), tabuleiro[i][j].caractere);
+            }
+            else
+                printf("%c ", tabuleiro[i][j].caractere);
+        }       
+        printf("\n");        
+    } 
+
     while (encontradas != quantidade){
 
         comando.numeroComando = 0;
@@ -572,15 +597,15 @@ void jogar(Palavra *palavras ,Item **tabuleiro, int tamLin, int tamCol, int quan
         }
 
         else if(comando.numeroComando == 2){
-            return; //salvaJogo();
+            salvaJogo(quantidade, tamLin, tamCol, tabuleiro, palavras, comando.nomeArquivoSave);
         }
 
         else if(comando.numeroComando == 3){
-            return; //resolveTabuleiro();
+            printResolvido(tamLin, tamCol, tabuleiro);
         } 
         
         else
-            return;
+            sairJogo();
 
         //---------------------------------------------------------------------------------------------
 
@@ -603,10 +628,13 @@ void jogar(Palavra *palavras ,Item **tabuleiro, int tamLin, int tamCol, int quan
             }       
             printf("\n");        
         } 
+
+        if(encontradas == quantidade){
+            printf("\nTodas as palavra encontradas!");
+
+        }
     }
 
-    printf("\nTodas as palavra encontradas");
-    //Fazer algo
     return;
 }
 
@@ -897,8 +925,12 @@ int verificaEscolha(Comando comando, Palavra *palavras, Item **tabuleiro, int *e
 
 Comando interpretaComando(char comandoCompleto[]){
     Comando comando;
+
     char marcar[] = "MARCAR\0";
 
+    char salvar[] = "SALVAR\0";
+    char nomeArquivo[100];
+    int indiceFim = 0;
 
     for (int i = 0; i < strlen(comandoCompleto); i++){
         if(comandoCompleto[i] >= 'a' && comandoCompleto[i] <= 'z')
@@ -934,9 +966,50 @@ Comando interpretaComando(char comandoCompleto[]){
         comando.numeroComando = 1;
         return comando;        
     }
-    else if(strstr(comandoCompleto, "SALVAR") != NULL && strlen(comandoCompleto) == 6){
-        comando.numeroComando = 2;
-        return comando;
+    else if(strstr(comandoCompleto, "SALVAR") != NULL){
+        for (int i = 0; i < 6; i++){
+            if(comandoCompleto[i] != salvar[i]){
+                comando.numeroComando = 0;
+                return comando;
+            }
+        }
+        if(comandoCompleto[6] == ' '){
+            for (int i = 0; i < strlen(comandoCompleto); i++){   
+                if(comandoCompleto[i] == '.' && comandoCompleto[i+1] == 'T' && comandoCompleto[i+2] == 'X' && comandoCompleto[i+3] == 'T'){
+                    indiceFim = i;
+                    break;
+                }
+
+                if((comandoCompleto[i] < 'A' && comandoCompleto[i] > 'Z') || (comandoCompleto[8] < '1' && comandoCompleto[8] > '9')){
+                    comando.numeroComando = 0;
+                    return comando;
+                }
+                
+            }
+
+            if(indiceFim != 0)
+                for (int i = 7, j = 0; j < indiceFim - 7; i++, j++){
+                    comando.nomeArquivoSave[j] = comandoCompleto[i];
+                    if(j == (indiceFim - 7)-1)
+                        comando.nomeArquivoSave[j+1] = '\0';
+                }
+            else{
+                for (int i = 7, j = 0; j < strlen(comandoCompleto) - 7; i++, j++){
+                    comando.nomeArquivoSave[j] = comandoCompleto[i];
+                    if(j == (strlen(comandoCompleto) - 7)-1)
+                        comando.nomeArquivoSave[j+1] = '\0';
+
+                }                
+            }
+            comando.numeroComando = 2;
+            return comando;           
+        }
+
+        else{
+            comando.numeroComando = 0;
+            return comando;
+        }
+
     }
     else if(strstr(comandoCompleto, "RESOLVER") != NULL && strlen(comandoCompleto) == 8){
         comando.numeroComando = 3;
@@ -951,8 +1024,167 @@ Comando interpretaComando(char comandoCompleto[]){
         return comando;
     }
 
-
-
-
-
 }   
+
+void salvaJogo(int quantidade, int tamLin, int tamCol, Item **tabuleiro, Palavra *palavras, char nomeArquivoSave[]){
+    FILE *save = fopen("save.txt", "w");
+
+    printf("\nAbrindo \"save.txt\"...\n");
+    if(save == NULL){
+        printf("Erro ao abrir Aquivo.");
+        return;
+    }
+
+    fprintf(save, "%i %i\n", tamLin, tamCol);
+
+    for (int i = 0; i < tamLin; i++){
+        for (int j = 0; j < tamCol; j++){
+            fprintf(save, "%c ", tabuleiro[i][j].caractere);
+        }
+        fprintf(save, "\n");        
+    }    
+
+    fprintf(save, "%i\n", quantidade);
+
+    for (int i = 0; i < quantidade; i++){
+        if(palavras[i].marcado == 1)
+            fprintf(save, "%s %c%c %c%c\n", palavras[i].palavra, palavras[i].limC + 'A', palavras[i].colC + 'A', palavras[i].limF + 'A', palavras[i].colF + 'A');
+
+        else
+            fprintf(save, "%s -- --\n", palavras[i].palavra);
+    }
+
+
+    fclose(save);
+}
+
+void printResolvido(int tamLin, int tamCol, Item **tabuleiro){
+
+    printf("  ");
+    for (int i = 0; i < tamCol; i++)
+        printf(BLUE("%c "), 'A'+ i);
+
+    printf("\n");
+
+    for (int i = 0; i < tamLin; i++){
+        printf(BLUE("%c "), 'A'+ i);
+        for (int j = 0; j < tamCol; j++){
+            if(tabuleiro[i][j].fazPartePalavra == 1){
+                printf(BOLD(RED("%c ")), tabuleiro[i][j].caractere);
+            }
+            else
+                printf("%c ", tabuleiro[i][j].caractere);
+        }       
+        printf("\n");        
+    } 
+
+}
+
+void continuaJogo(){
+
+    Item **tabuleiro;
+    Palavra *palavras;
+
+    char tmp;
+    char nomeArquivo[100];
+    int tamLin, tamCol, quantidade;
+
+    FILE *save = fopen("save.txt", "r");
+
+    //---------------------------------------------------------------------------------------------
+    
+    printf("\nAbrindo \"save.txt\"...");
+    if(save == NULL){
+        printf("\nErro ao abrir arquivo..");
+        return;
+    }
+
+    fscanf(save, "%i %i", &tamLin, &tamCol);
+    tabuleiro = (Item**)malloc(tamLin*sizeof(Item*));
+    for(int i = 0; i < tamLin; i++)
+        (tabuleiro)[i] = (Item*)malloc(tamCol*sizeof(Item));
+
+    if(tabuleiro == NULL){
+        printf("\nErro.");
+        return;
+    }
+    
+    for (int i = 0; i < tamLin; i++){
+        for (int j = 0; j < tamCol; j++){
+            fscanf(save, "%c", &tmp);
+            if(tmp >= 'A' && tmp <= 'Z')
+                tabuleiro[i][j].caractere = tmp;
+            else
+                j--;
+        }
+    }  
+
+    //---------------------------------------------------------------------------------------------
+    
+    fscanf(save, "%i", &quantidade);
+    palavras = malloc(quantidade * sizeof(Palavra));
+
+    if(palavras == NULL){
+        printf("\nErro.");
+        return;
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    fscanf(save, "%c", &tmp);
+    for (int i = 0; i < quantidade; i++){
+        for (int j = 0; j < 100; j++){
+            fscanf(save, "%c", &tmp);   
+
+            if(tmp >= 'A' && tmp <= 'Z')
+                palavras[i].palavra[j] = tmp;
+
+            if(tmp == ' ')
+                break;
+        }
+        
+        fscanf(save, "%c", &tmp);
+        if(tmp >= 'A' && tmp <= 'Z'){
+            palavras[i].limC = tmp - 'A';
+            fscanf(save, "%c", &tmp);
+            palavras[i].colC = tmp - 'A';
+            fscanf(save, "%c", &tmp);
+            fscanf(save, "%c", &tmp);
+            palavras[i].limF = tmp - 'A';
+            fscanf(save, "%c", &tmp);
+            palavras[i].colF = tmp - 'A';
+            fscanf(save, "%c", &tmp);
+            palavras[i].marcado = 1;
+        }
+        else{
+            fscanf(save, "%c", &tmp);
+            fscanf(save, "%c", &tmp);
+            fscanf(save, "%c", &tmp);
+            fscanf(save, "%c", &tmp);
+            fscanf(save, "%c", &tmp);
+            palavras[i].marcado = 0;
+        }    
+
+        palavras[i].tamnho = strlen(palavras[i].palavra);    
+
+    }  
+
+    fclose(save);
+  
+    //Falta inicializar no tabuleiro = fazPartePalavra e marcadoUsuario
+
+    resolveTabuleiro(quantidade, tamLin, tamCol, tabuleiro, palavras);
+    jogar(palavras, tabuleiro, tamLin, tamCol, quantidade);
+}
+
+void resolveTabuleiro(int quantidade, int tamLin, int tamCol, Item **tabuleiro, Palavra *palavras){
+    //resolve
+}
+
+void sairJogo(){
+    //free nas alocacoçes
+}
+
+void printInstrucoes(){
+    //print
+}
