@@ -602,10 +602,13 @@ void jogar(Palavra *palavras ,Item **tabuleiro, int tamLin, int tamCol, int quan
 
         else if(comando.numeroComando == 3){
             printResolvido(tamLin, tamCol, tabuleiro);
+            return;
         } 
         
-        else
+        else{
             sairJogo();
+            return;
+        }
 
         //---------------------------------------------------------------------------------------------
 

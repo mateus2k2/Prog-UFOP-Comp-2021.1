@@ -7,6 +7,7 @@ MELHORAR
 Conferir e testar as direcoes
 Ler nome do arquivo do usuario (dicionario, restore)
 Implementar nome arquivo no save
+Implementar saida no menu principal
 Grid colorido igual o do PDF (Mudar o fundo)
 Struct coodernada
 Lixo lendo arquivos (\n depois da quantidade de palavra)
