@@ -111,7 +111,7 @@ int verificaEscolha(Comando comando, Palavra *palavras ,Item **tabuleiro, int *e
 void salvaJogo(int quantidade, int tamLin, int tamCol, Item **tabuleiro, Palavra *palavras, char nomeArquivoSave[]);
 void printResolvido(int tamLin, int tamCol, Item **tabuleiro);
 void continuaJogo();
-void resolveTabuleiro(int quantidade, int tamLin, int tamCol, Item **tabuleiro, Palavra *palavras);
+void resolveTabuleiroSaveGame(int quantidade, int tamLin, int tamCol, Item **tabuleiro, Palavra *palavras);
 void sairJogo();
 
 //**********************************************************************************************************************
@@ -131,6 +131,7 @@ int main(int argc, char *argv[ ]){
 void menu(){
 
     int escolha;
+    char escolhaChar[20];
 
     printf("\nO que deseja fazer:\n");
 
@@ -138,25 +139,26 @@ void menu(){
     printf("\n2.  Continuar um novo jogo");
     printf("\n3.  Instrucoes do jogo\n\n");
 
-    //Sair do Jogo == Sair do programa
     printf("Escolha a opcao (digite ”sair” em qualquer lugar para sair do jogo): ");
-    while (escolha != 1 && escolha != 2 && escolha != 3){
-        scanf("%i", &escolha);
-        while ((getchar()) != '\n');
+    while (1){
+        fgets(escolhaChar, 20, stdin);
+        escolhaChar[strlen(escolhaChar)-1] = '\0';
 
-        switch (escolha){
-        case 1:
+        for (int i = 0; i < strlen(escolhaChar); i++){
+            if(escolhaChar[i] >= 'a' && escolhaChar[i] <= 'z')
+                escolhaChar[i] = escolhaChar[i]-32;
+        }        
+
+        if(strcmp(escolhaChar,"1") == 0)
             criarJogo();
-            break;
-        case 2:
+        else if(strcmp(escolhaChar,"2") == 0)
             continuaJogo();
-            break;
-        case 3:
+        else if(strcmp(escolhaChar,"3") == 0)
             printInstrucoes();
-            break;
-        default: printf("Opcao Invalida. Tente Novamente: ");
-            break;
-        }
+        else if(strcmp(escolhaChar,"SAIR") == 0)
+            return;
+        else
+            printf("Opcao Invalida. Tente Novamente: ");
     }
 }
 
@@ -172,10 +174,23 @@ void criarJogo(){
     int contDirecao[8] = {0};
     int feito = 0;
 
-    char nomeArquivo[100];
+    char nomeArquivo[100], nomeArquivoTmp[100];
 
     int tamLin, tamCol, quantidade, dificuldade;
     int escolhaDirecao = 0, escolhaColocar, escolhaLetra, contColocadas = 0;
+
+    // fgets(nomeArquivo, 100, stdin);
+
+    // for (int i = 0; i < strlen(nomeArquivo); i++){
+    //     if(nomeArquivo[i] >= 'a' && nomeArquivo[i] <= 'z')
+    //         nomeArquivoTmp[i] = nomeArquivo[i]-32;
+
+    //     else
+    //         nomeArquivoTmp[i] = nomeArquivo[i];
+    // }        
+
+    // if(strcmp(nomeArquivoTmp,"SAIR") == 0)
+    //     return;
 
     FILE *dicionario = fopen("dicionario.txt", "r");
 
@@ -932,12 +947,14 @@ Comando interpretaComando(char comandoCompleto[]){
     char marcar[] = "MARCAR\0";
 
     char salvar[] = "SALVAR\0";
-    char nomeArquivo[100];
+    char nomeArquivoTmp[100];
     int indiceFim = 0;
 
     for (int i = 0; i < strlen(comandoCompleto); i++){
+        nomeArquivoTmp[i] = comandoCompleto[i];
+
         if(comandoCompleto[i] >= 'a' && comandoCompleto[i] <= 'z')
-                comandoCompleto[i] = comandoCompleto[i] - 32;
+                comandoCompleto[i] = comandoCompleto[i] - 32;        
     }
 
     if(strstr(comandoCompleto, "MARCAR") != NULL && comandoCompleto[6] == ' ') {
@@ -992,18 +1009,19 @@ Comando interpretaComando(char comandoCompleto[]){
 
             if(indiceFim != 0)
                 for (int i = 7, j = 0; j < indiceFim - 7; i++, j++){
-                    comando.nomeArquivoSave[j] = comandoCompleto[i];
+                    comando.nomeArquivoSave[j] = nomeArquivoTmp[i];
                     if(j == (indiceFim - 7)-1)
                         comando.nomeArquivoSave[j+1] = '\0';
                 }
             else{
                 for (int i = 7, j = 0; j < strlen(comandoCompleto) - 7; i++, j++){
-                    comando.nomeArquivoSave[j] = comandoCompleto[i];
+                    comando.nomeArquivoSave[j] = nomeArquivoTmp[i];
                     if(j == (strlen(comandoCompleto) - 7)-1)
                         comando.nomeArquivoSave[j+1] = '\0';
 
                 }                
             }
+            
             comando.numeroComando = 2;
             return comando;           
         }
@@ -1089,8 +1107,21 @@ void continuaJogo(){
     Palavra *palavras;
 
     char tmp;
-    char nomeArquivo[100];
+    char nomeArquivo[100], nomeArquivoTmp[100];
     int tamLin, tamCol, quantidade;
+
+    // fgets(nomeArquivo, 100, stdin);
+
+    // for (int i = 0; i < strlen(nomeArquivo); i++){
+    //     if(nomeArquivo[i] >= 'a' && nomeArquivo[i] <= 'z')
+    //         nomeArquivoTmp[i] = nomeArquivo[i]-32;
+
+    //     else
+    //         nomeArquivoTmp[i] = nomeArquivo[i];
+    // }        
+
+    // if(strcmp(nomeArquivoTmp,"SAIR") == 0)
+    //     return;
 
     FILE *save = fopen("save.txt", "r");
 
@@ -1176,12 +1207,45 @@ void continuaJogo(){
   
     //Falta inicializar no tabuleiro = fazPartePalavra e marcadoUsuario
 
-    resolveTabuleiro(quantidade, tamLin, tamCol, tabuleiro, palavras);
+    resolveTabuleiroSaveGame(quantidade, tamLin, tamCol, tabuleiro, palavras);
     jogar(palavras, tabuleiro, tamLin, tamCol, quantidade);
 }
 
-void resolveTabuleiro(int quantidade, int tamLin, int tamCol, Item **tabuleiro, Palavra *palavras){
-    //resolve
+void resolveTabuleiroSaveGame(int quantidade, int tamLin, int tamCol, Item **tabuleiro, Palavra *palavras){
+    
+    int aprovado;
+
+    for (int contColocadas = 0; contColocadas < quantidade; contColocadas++){
+        
+        for (int lim = 0; lim < tamLin; lim++){
+            for (int col = 0; col < tamCol; col++){
+
+                if(col + palavras[contColocadas].tamnho <= tamCol){
+
+                    for (int i = col, j = 0; j < palavras[contColocadas].tamnho; i++, j++){
+                        if(tabuleiro[lim][i].fazPartePalavra == 1 && tabuleiro[lim][i].fazPartePalavra != palavras[contColocadas].palavra[j]){
+                            aprovado = 0;
+                            break;
+                        }
+                    }
+
+                    if(aprovado == 1){
+                        for (int i = col, j = 0; j < palavras[contColocadas].tamnho; i++, j++){
+                            tabuleiro[lim][i].fazPartePalavra = 1;
+                        }
+                        contColocadas++;
+                    }
+                    aprovado = 1;
+                }
+
+
+
+            }
+            
+        }
+        
+    }
+    
 }
 
 void sairJogo(){

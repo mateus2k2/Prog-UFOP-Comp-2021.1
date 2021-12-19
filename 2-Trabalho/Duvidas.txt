@@ -5,22 +5,26 @@ Verificar Razão entre numero de palavras e tamanho da matriz (offset na hora de
 
 MELHORAR 
 Conferir e testar as direcoes
-Ler nome do arquivo do usuario (dicionario, restore)
-Implementar nome arquivo no save
-Implementar saida no menu principal
-Grid colorido igual o do PDF (Mudar o fundo)
-Struct coodernada
 Lixo lendo arquivos (\n depois da quantidade de palavra)
 Função sair do jogo free em tudo
+
+MELHORAR
+Implementar sair em qualquer lugar
+Ler nome do arquivo do usuario (dicionario, restore)
+Implementar nome arquivo no save
+Comando save (manter escrita original e colcoar txt no final) 
+
+MELHORAR
+Grid colorido igual o do PDF (Mudar o fundo)
+Struct coodernada
 Sgmentation foult uma vez
 Arquivos .h e .c
 
 EXTRA CHECKS
 Erro caso palavra seja impossivel de caber no tabuleiro (maior que lim ou col) (realloc)
-Palavras podem ter espaço, acento, 1 letra e repetidas (Criar e continuar jogo)
+Palavras podem ter espaço, acento, 1 letra e repetidas (Criar jogo)
 Alocar palavras do dicionario dinamicamente (realloc)
 Palavra com acento no codigo
-Zerar palavras[i].marcado = 0 antes de jogar
         
 ARQUIVOS
 Menus
