@@ -140,7 +140,7 @@ void menu(){
     printf("\n3.  Instrucoes do jogo\n\n");
 
     printf("Escolha a opcao (digite ”sair” em qualquer lugar para sair do jogo): ");
-    while (1){
+    while (strcmp(escolhaChar,"1") != 0 || strcmp(escolhaChar,"2") == 0 && strcmp(escolhaChar,"3") != 0 && strcmp(escolhaChar,"SAIR") != 0){
         fgets(escolhaChar, 20, stdin);
         escolhaChar[strlen(escolhaChar)-1] = '\0';
 
@@ -172,25 +172,52 @@ void criarJogo(){
 
     char tmp[2];
     int contDirecao[8] = {0};
-    int feito = 0;
+    int feito = 0, verificado = 0, tamanhoTmp;
 
     char nomeArquivo[100], nomeArquivoTmp[100];
 
     int tamLin, tamCol, quantidade, dificuldade;
     int escolhaDirecao = 0, escolhaColocar, escolhaLetra, contColocadas = 0;
 
-    // fgets(nomeArquivo, 100, stdin);
+    // printf("\nDigite o nome do arquivo: ");
+    // while (verificado == 0){
+    //     fgets(nomeArquivo, 100, stdin);
+    //     nomeArquivo[strlen(nomeArquivo)-1] = '\0';
 
-    // for (int i = 0; i < strlen(nomeArquivo); i++){
-    //     if(nomeArquivo[i] >= 'a' && nomeArquivo[i] <= 'z')
-    //         nomeArquivoTmp[i] = nomeArquivo[i]-32;
+    //     for (int i = 0; i < strlen(nomeArquivo); i++){
+    //         if((nomeArquivo[i] >= 'a' && nomeArquivo[i] <= 'z'))
+    //             nomeArquivoTmp[i] = nomeArquivo[i]-32;
 
-    //     else
-    //         nomeArquivoTmp[i] = nomeArquivo[i];
-    // }        
+    //         else if((nomeArquivo[i] >= 'A' && nomeArquivo[i] <= 'Z') || (nomeArquivo[i] >= '1' && nomeArquivo[i] <= '9') || nomeArquivo[i] == '.')
+    //             nomeArquivoTmp[i] = nomeArquivo[i];
+            
+    //         else{
+    //             verificado = 0;
+    //             break;
+    //         }
 
-    // if(strcmp(nomeArquivoTmp,"SAIR") == 0)
-    //     return;
+    //         if(i == strlen(nomeArquivo) - 1){
+    //             verificado = 1;
+    //             nomeArquivoTmp[strlen(nomeArquivo)] = '\0';
+    //         }
+    //     }        
+
+    //     if(strcmp(nomeArquivoTmp,"SAIR") == 0)
+    //         return;
+        
+    //     if(verificado == 0)
+    //         printf("Nome do arquivo invalido. Tente Novamente: ");
+    // }    
+
+
+    // tamanhoTmp = strlen(nomeArquivoTmp);
+    // if(nomeArquivoTmp[tamanhoTmp-1] != 'T' && nomeArquivoTmp[tamanhoTmp-2] != 'X' && nomeArquivoTmp[tamanhoTmp-3] != 'T' && nomeArquivoTmp[tamanhoTmp-4] != '.'){
+    //     nomeArquivo[tamanhoTmp] = '.';
+    //     nomeArquivo[tamanhoTmp+1] = 't';
+    //     nomeArquivo[tamanhoTmp+2] = 'x';
+    //     nomeArquivo[tamanhoTmp+3] = 't';
+    //     nomeArquivo[tamanhoTmp+4] = '\0';
+    // }
 
     FILE *dicionario = fopen("dicionario.txt", "r");
 
@@ -371,7 +398,7 @@ void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int
     if(escolhaDirecao == 0 && col + palavras[(*contColocadas)].tamnho <= tamCol){
 
         for (int i = col, j = 0; j < palavras[(*contColocadas)].tamnho; i++, j++){
-            if(tabuleiro[lim][i].fazPartePalavra == 1 && tabuleiro[lim][i].fazPartePalavra != palavras[*contColocadas].palavra[j]){
+            if(tabuleiro[lim][i].fazPartePalavra == 1 && tabuleiro[lim][i].caractere != palavras[*contColocadas].palavra[j]){
                 aprovado = 0;
                 break;
             }
@@ -393,7 +420,7 @@ void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int
     else if(escolhaDirecao == 1 && lim + palavras[(*contColocadas)].tamnho <= tamLin){
 
         for (int i = lim, j = 0; j < palavras[(*contColocadas)].tamnho; i++, j++){
-            if(tabuleiro[i][col].fazPartePalavra == 1 && tabuleiro[i][col].fazPartePalavra != palavras[*contColocadas].palavra[j]){
+            if(tabuleiro[i][col].fazPartePalavra == 1 && tabuleiro[i][col].caractere != palavras[*contColocadas].palavra[j]){
                 aprovado = 0;
                 break;
             }
@@ -415,7 +442,7 @@ void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int
 
    else if(escolhaDirecao == 2 && lim + palavras[(*contColocadas)].tamnho <= tamLin && col + palavras[(*contColocadas)].tamnho <= tamCol){
         for (int i = lim, k = col, j = 0; j < palavras[(*contColocadas)].tamnho; i++, j++, k++){
-            if(tabuleiro[i][k].fazPartePalavra == 1 && tabuleiro[i][k].fazPartePalavra != palavras[*contColocadas].palavra[j]){
+            if(tabuleiro[i][k].fazPartePalavra == 1 && tabuleiro[i][k].caractere != palavras[*contColocadas].palavra[j]){
                 aprovado = 0;
                 break;
             }
@@ -438,7 +465,7 @@ void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int
     else if(escolhaDirecao == 3 && col + palavras[(*contColocadas)].tamnho <= tamCol && lim - palavras[(*contColocadas)].tamnho >= 0){
        
         for (int i = lim, k = col, j = 0; j < palavras[(*contColocadas)].tamnho; i--, j++, k++){
-            if(tabuleiro[i][k].fazPartePalavra == 1 && tabuleiro[i][k].fazPartePalavra != palavras[*contColocadas].palavra[j]){
+            if(tabuleiro[i][k].fazPartePalavra == 1 && tabuleiro[i][k].caractere != palavras[*contColocadas].palavra[j]){
                 aprovado = 0;
                 break;
             }
@@ -460,7 +487,7 @@ void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int
 
     else if(escolhaDirecao == 4 && lim - palavras[(*contColocadas)].tamnho >= 0){
         for (int i = lim, j = 0; j < palavras[(*contColocadas)].tamnho; i--, j++){
-            if(tabuleiro[i][col].fazPartePalavra == 1 && tabuleiro[i][col].fazPartePalavra != palavras[*contColocadas].palavra[j]){
+            if(tabuleiro[i][col].fazPartePalavra == 1 && tabuleiro[i][col].caractere != palavras[*contColocadas].palavra[j]){
                 aprovado = 0;
                 break;
             }
@@ -482,7 +509,7 @@ void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int
 
     else if(escolhaDirecao == 5 && col - palavras[(*contColocadas)].tamnho >= 0){
         for (int i = col, j = 0; j < palavras[(*contColocadas)].tamnho; i--, j++){
-            if(tabuleiro[i][lim].fazPartePalavra == 1 && tabuleiro[i][lim].fazPartePalavra != palavras[*contColocadas].palavra[j]){
+            if(tabuleiro[i][lim].fazPartePalavra == 1 && tabuleiro[i][lim].caractere != palavras[*contColocadas].palavra[j]){
                 aprovado = 0;
                 break;
             }
@@ -504,7 +531,7 @@ void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int
 
     else if(escolhaDirecao == 6 && lim - palavras[(*contColocadas)].tamnho >= 0 && col - palavras[(*contColocadas)].tamnho >= 0){
         for (int i = lim, k = col, j = 0; j < palavras[(*contColocadas)].tamnho; i--, j++, k--){
-            if(tabuleiro[i][k].fazPartePalavra == 1 && tabuleiro[i][k].fazPartePalavra != palavras[*contColocadas].palavra[j]){
+            if(tabuleiro[i][k].fazPartePalavra == 1 && tabuleiro[i][k].caractere != palavras[*contColocadas].palavra[j]){
                 aprovado = 0;
                 break;
             }
@@ -526,7 +553,7 @@ void colocaPalavra(int escolhaDirecao, int *contColocadas, int lim, int col, int
 
     else if(escolhaDirecao == 7 && lim + palavras[(*contColocadas)].tamnho <= tamLin && col - palavras[(*contColocadas)].tamnho >= 0){
         for (int i = lim, k = col, j = 0; j < palavras[(*contColocadas)].tamnho; i++, j++, k--){
-            if(tabuleiro[i][k].fazPartePalavra == 1 && tabuleiro[i][k].fazPartePalavra != palavras[*contColocadas].palavra[j]){
+            if(tabuleiro[i][k].fazPartePalavra == 1 && tabuleiro[i][k].caractere != palavras[*contColocadas].palavra[j]){
                 aprovado = 0;
                 break;
             }
@@ -584,7 +611,7 @@ void jogar(Palavra *palavras ,Item **tabuleiro, int tamLin, int tamCol, int quan
         
         //---------------------------------------------------------------------------------------------
         
-        while (comando.numeroComando == 0 || comando.limC > tamLin-1 || comando.limF > tamLin-1 || comando.colC > tamCol-1 || comando.colF > tamCol-1){
+        while (comando.numeroComando == 0 && (comando.limC > tamLin-1 || comando.limF > tamLin-1 || comando.colC > tamCol-1 || comando.colF > tamCol-1)){
             printf("\nDigite o Comando: ");
             fgets(comandoCompleto, 100, stdin);
             comandoCompleto[strlen(comandoCompleto)-1] = '\0';
@@ -594,7 +621,7 @@ void jogar(Palavra *palavras ,Item **tabuleiro, int tamLin, int tamCol, int quan
             if(comando.numeroComando == 0)
                 printf("Comando Invalido!\n");
 
-            if(comando.limC > tamLin-1 || comando.limF > tamLin-1 || comando.colC > tamCol-1 || comando.colF > tamCol-1)
+            if(comando.numeroComando == 0 && (comando.limC > tamLin-1 || comando.limF > tamLin-1 || comando.colC > tamCol-1 || comando.colF > tamCol-1))
                 printf("Indice Invalido!\n");        
         }
 
@@ -949,6 +976,7 @@ Comando interpretaComando(char comandoCompleto[]){
     char salvar[] = "SALVAR\0";
     char nomeArquivoTmp[100];
     int indiceFim = 0;
+    int tamanhoTmp;
 
     for (int i = 0; i < strlen(comandoCompleto); i++){
         nomeArquivoTmp[i] = comandoCompleto[i];
@@ -956,6 +984,7 @@ Comando interpretaComando(char comandoCompleto[]){
         if(comandoCompleto[i] >= 'a' && comandoCompleto[i] <= 'z')
                 comandoCompleto[i] = comandoCompleto[i] - 32;        
     }
+    nomeArquivoTmp[strlen(comandoCompleto)] = '\0';
 
     if(strstr(comandoCompleto, "MARCAR") != NULL && comandoCompleto[6] == ' ') {
         for (int i = 0; i < 6; i++){
@@ -1021,7 +1050,13 @@ Comando interpretaComando(char comandoCompleto[]){
 
                 }                
             }
-            
+            tamanhoTmp = strlen(comando.nomeArquivoSave);
+            comando.nomeArquivoSave[tamanhoTmp+0] = '.';
+            comando.nomeArquivoSave[tamanhoTmp+1] = 't';
+            comando.nomeArquivoSave[tamanhoTmp+2] = 'x';
+            comando.nomeArquivoSave[tamanhoTmp+3] = 't';
+            comando.nomeArquivoSave[tamanhoTmp+4] = '\0';
+
             comando.numeroComando = 2;
             return comando;           
         }
@@ -1108,26 +1143,54 @@ void continuaJogo(){
 
     char tmp;
     char nomeArquivo[100], nomeArquivoTmp[100];
+    int tamanhoTmp, verificado = 0;
     int tamLin, tamCol, quantidade;
 
-    // fgets(nomeArquivo, 100, stdin);
+    // printf("\nDigite o nome do arquivo: ");
+    // while (verificado == 0){
+    //     fgets(nomeArquivo, 100, stdin);
+    //     nomeArquivo[strlen(nomeArquivo)-1] = '\0';
 
-    // for (int i = 0; i < strlen(nomeArquivo); i++){
-    //     if(nomeArquivo[i] >= 'a' && nomeArquivo[i] <= 'z')
-    //         nomeArquivoTmp[i] = nomeArquivo[i]-32;
+    //     for (int i = 0; i < strlen(nomeArquivo); i++){
+    //         if((nomeArquivo[i] >= 'a' && nomeArquivo[i] <= 'z'))
+    //             nomeArquivoTmp[i] = nomeArquivo[i]-32;
 
-    //     else
-    //         nomeArquivoTmp[i] = nomeArquivo[i];
-    // }        
+    //         else if((nomeArquivo[i] >= 'A' && nomeArquivo[i] <= 'Z') || (nomeArquivo[i] >= '1' && nomeArquivo[i] <= '9') || nomeArquivo[i] == '.')
+    //             nomeArquivoTmp[i] = nomeArquivo[i];
+            
+    //         else{
+    //             verificado = 0;
+    //             break;
+    //         }
 
-    // if(strcmp(nomeArquivoTmp,"SAIR") == 0)
-    //     return;
+    //         if(i == strlen(nomeArquivo) - 1){
+    //             verificado = 1;
+    //             nomeArquivoTmp[strlen(nomeArquivo)] = '\0';
+    //         }
+    //     }        
 
+    //     if(strcmp(nomeArquivoTmp,"SAIR") == 0)
+    //         return;
+        
+    //     if(verificado == 0)
+    //         printf("Nome do arquivo invalido. Tente Novamente: ");
+    // }    
+
+
+    // tamanhoTmp = strlen(nomeArquivoTmp);
+    // if(nomeArquivoTmp[tamanhoTmp-1] != 'T' && nomeArquivoTmp[tamanhoTmp-2] != 'X' && nomeArquivoTmp[tamanhoTmp-3] != 'T' && nomeArquivoTmp[tamanhoTmp-4] != '.'){
+    //     nomeArquivo[tamanhoTmp] = '.';
+    //     nomeArquivo[tamanhoTmp+1] = 't';
+    //     nomeArquivo[tamanhoTmp+2] = 'x';
+    //     nomeArquivo[tamanhoTmp+3] = 't';
+    //     nomeArquivo[tamanhoTmp+4] = '\0';
+    // }
+    
     FILE *save = fopen("save.txt", "r");
 
     //---------------------------------------------------------------------------------------------
     
-    printf("\nAbrindo \"save.txt\"...");
+    printf("\nAbrindo \"save.txt\"...\n");
     if(save == NULL){
         printf("\nErro ao abrir arquivo..");
         return;
@@ -1204,47 +1267,299 @@ void continuaJogo(){
     }  
 
     fclose(save);
-  
-    //Falta inicializar no tabuleiro = fazPartePalavra e marcadoUsuario
-
+    
+    
     resolveTabuleiroSaveGame(quantidade, tamLin, tamCol, tabuleiro, palavras);
     jogar(palavras, tabuleiro, tamLin, tamCol, quantidade);
 }
 
 void resolveTabuleiroSaveGame(int quantidade, int tamLin, int tamCol, Item **tabuleiro, Palavra *palavras){
     
-    int aprovado;
+    int aprovado = 1, teste = 0;
+
+    for (int i = 0; i < tamLin; i++)
+        for (int j = 0; j < tamCol; j++)
+            tabuleiro[i][j].fazPartePalavra == 0;
 
     for (int contColocadas = 0; contColocadas < quantidade; contColocadas++){
         
         for (int lim = 0; lim < tamLin; lim++){
             for (int col = 0; col < tamCol; col++){
-
                 if(col + palavras[contColocadas].tamnho <= tamCol){
 
                     for (int i = col, j = 0; j < palavras[contColocadas].tamnho; i++, j++){
-                        if(tabuleiro[lim][i].fazPartePalavra == 1 && tabuleiro[lim][i].fazPartePalavra != palavras[contColocadas].palavra[j]){
+                        if(tabuleiro[lim][i].caractere != palavras[contColocadas].palavra[j]){
                             aprovado = 0;
                             break;
                         }
                     }
 
-                    if(aprovado == 1){
+                    if(aprovado == 1 && palavras[contColocadas].marcado == 0){
                         for (int i = col, j = 0; j < palavras[contColocadas].tamnho; i++, j++){
                             tabuleiro[lim][i].fazPartePalavra = 1;
+                            tabuleiro[lim][i].marcadoUsuario = 0;
                         }
                         contColocadas++;
+                        teste = 1;
+                        break;
+                    }
+                    if(aprovado == 1 && palavras[contColocadas].marcado == 1){
+                        for (int i = col, j = 0; j < palavras[contColocadas].tamnho; i++, j++){
+                            tabuleiro[lim][i].fazPartePalavra = 1;
+                            tabuleiro[lim][i].marcadoUsuario = 1;
+                        }
+                        contColocadas++;
+                        teste = 1;
+                        break;
+                    }
+                    aprovado = 1;
+
+                }
+
+                if(lim + palavras[contColocadas].tamnho <= tamLin){
+
+                    for (int i = lim, j = 0; j < palavras[contColocadas].tamnho; i++, j++){
+                        if(tabuleiro[i][col].caractere != palavras[contColocadas].palavra[j]){
+                            aprovado = 0;
+                            break;
+                        }
+                    }
+
+                    if(aprovado == 1 && palavras[contColocadas].marcado == 0){
+                        
+                        for (int i = lim, j = 0; j < palavras[contColocadas].tamnho; i++, j++){
+                            tabuleiro[i][col].fazPartePalavra = 1;
+                            tabuleiro[i][col].marcadoUsuario = 0;
+                        }
+                        contColocadas++;
+                        teste = 1;
+                        break;
+                    }
+                    if(aprovado == 1 && palavras[contColocadas].marcado == 1){
+                        
+                        for (int i = lim, j = 0; j < palavras[contColocadas].tamnho; i++, j++){
+                            tabuleiro[i][col].fazPartePalavra = 1;
+                            tabuleiro[i][col].marcadoUsuario = 1;
+                        }
+                        contColocadas++;
+                        teste = 1;
+                        break;
                     }
                     aprovado = 1;
                 }
 
+                // else if(lim + palavras[contColocadas].tamnho <= tamLin && col + palavras[contColocadas].tamnho <= tamCol){
+                //     for (int i = lim, k = col, j = 0; j < palavras[contColocadas].tamnho; i++, j++, k++){
+                //         if(tabuleiro[i][k].fazPartePalavra == 1 && tabuleiro[i][k].fazPartePalavra != palavras[contColocadas].palavra[j]){
+                //             aprovado = 0;
+                //             break;
+                //         }
+                //     }
 
+                //     if(aprovado == 1 && palavras[contColocadas].marcado == 0){
+                        
+                //         for (int i = lim, k = col, j = 0; j < palavras[contColocadas].tamnho; i++, j++, k++){
+                //             tabuleiro[i][k].fazPartePalavra = 1;
+                //             tabuleiro[i][k].marcadoUsuario = 0;
+                //         }
+                //         contColocadas++;
+                //     }
+                //     if(aprovado == 1 && palavras[contColocadas].marcado == 1){
+                        
+                //         for (int i = lim, k = col, j = 0; j < palavras[contColocadas].tamnho; i++, j++, k++){
+                //             tabuleiro[i][k].fazPartePalavra = 1;
+                //             tabuleiro[i][k].marcadoUsuario = 1;
+                //         }
+                //         contColocadas++;
+                //     }
+                //     aprovado = 1;
+                // }
+
+                // else if(col + palavras[contColocadas].tamnho <= tamCol && lim - palavras[contColocadas].tamnho >= 0){
+                
+                //     for (int i = lim, k = col, j = 0; j < palavras[contColocadas].tamnho; i--, j++, k++){
+                //         if(tabuleiro[i][k].fazPartePalavra == 1 && tabuleiro[i][k].fazPartePalavra != palavras[contColocadas].palavra[j]){
+                //             aprovado = 0;
+                //             break;
+                //         }
+                //     }
+
+                //     if(aprovado == 1 && palavras[contColocadas].marcado == 0){
+                        
+                //         for (int i = lim, k = col, j = 0; j < palavras[contColocadas].tamnho; i--, j++, k++){
+                //             tabuleiro[i][k].fazPartePalavra = 1;
+                //             tabuleiro[i][k].marcadoUsuario = 0;
+                //         }
+                //         contColocadas++; 
+                //     }
+                //     if(aprovado == 1 && palavras[contColocadas].marcado == 1){
+                        
+                //         for (int i = lim, k = col, j = 0; j < palavras[contColocadas].tamnho; i--, j++, k++){
+                //             tabuleiro[i][k].fazPartePalavra = 1;
+                //             tabuleiro[i][k].marcadoUsuario = 1;
+                //         }
+                //         contColocadas++; 
+                //     }
+                //     aprovado = 1;
+                // }
+
+                // else if(lim - palavras[contColocadas].tamnho >= 0){
+                //     for (int i = lim, j = 0; j < palavras[contColocadas].tamnho; i--, j++){
+                //         if(tabuleiro[i][col].fazPartePalavra == 1 && tabuleiro[i][col].fazPartePalavra != palavras[contColocadas].palavra[j]){
+                //             aprovado = 0;
+                //             break;
+                //         }
+                //     }
+
+                //     if(aprovado == 1 && palavras[contColocadas].marcado == 0){
+                        
+                //         for (int i = lim, j = 0; j < palavras[contColocadas].tamnho; i--, j++){
+                //             tabuleiro[i][col].fazPartePalavra = 1;
+                //             tabuleiro[i][col].marcadoUsuario = 0;
+                //         }
+                //         contColocadas++;
+                //     }
+                //     if(aprovado == 1 && palavras[contColocadas].marcado == 1){
+                        
+                //         for (int i = lim, j = 0; j < palavras[contColocadas].tamnho; i--, j++){
+                //             tabuleiro[i][col].fazPartePalavra = 1;
+                //             tabuleiro[i][col].marcadoUsuario = 1;
+                //         }
+                //         contColocadas++;
+                //     }
+                //     aprovado = 1;
+                // }
+
+                // else if(col - palavras[contColocadas].tamnho >= 0){
+                //     for (int i = col, j = 0; j < palavras[contColocadas].tamnho; i--, j++){
+                //         if(tabuleiro[i][lim].fazPartePalavra == 1 && tabuleiro[i][lim].fazPartePalavra != palavras[contColocadas].palavra[j]){
+                //             aprovado = 0;
+                //             break;
+                //         }
+                //     }
+
+                //     if(aprovado == 1 && palavras[contColocadas].marcado == 0){
+                        
+                //         for (int i = col, j = 0; j < palavras[contColocadas].tamnho; i--, j++){
+                //             tabuleiro[i][lim].fazPartePalavra = 1;
+                //             tabuleiro[i][lim].marcadoUsuario = 0;
+                //         }
+                //         contColocadas++;
+                //     }
+                //     if(aprovado == 1 && palavras[contColocadas].marcado == 1){
+                        
+                //         for (int i = col, j = 0; j < palavras[contColocadas].tamnho; i--, j++){
+                //             tabuleiro[i][lim].fazPartePalavra = 1;
+                //             tabuleiro[i][lim].marcadoUsuario = 1;
+                //         }
+                //         contColocadas++;
+                //     }
+                //     aprovado = 1;
+                // }
+
+                // else if(lim - palavras[contColocadas].tamnho >= 0 && col - palavras[contColocadas].tamnho >= 0){
+                //     for (int i = lim, k = col, j = 0; j < palavras[contColocadas].tamnho; i--, j++, k--){
+                //         if(tabuleiro[i][k].fazPartePalavra == 1 && tabuleiro[i][k].fazPartePalavra != palavras[contColocadas].palavra[j]){
+                //             aprovado = 0;
+                //             break;
+                //         }
+                //     }
+
+                //     if(aprovado == 1 && palavras[contColocadas].marcado == 0){
+                        
+                //         for (int i = lim, k = col, j = 0; j < palavras[contColocadas].tamnho; i--, j++, k--){
+                //             tabuleiro[i][k].fazPartePalavra = 1;
+                //             tabuleiro[i][k].marcadoUsuario = 0;
+                //         }
+                //         contColocadas++;
+                //     }
+                //     if(aprovado == 1 && palavras[contColocadas].marcado == 1){
+                        
+                //         for (int i = lim, k = col, j = 0; j < palavras[contColocadas].tamnho; i--, j++, k--){
+                //             tabuleiro[i][k].fazPartePalavra = 1;
+                //             tabuleiro[i][k].marcadoUsuario = 1;
+                //         }
+                //         contColocadas++;
+                //     }
+                //     aprovado = 1;
+                // }
+
+                // else if(lim + palavras[contColocadas].tamnho <= tamLin && col - palavras[contColocadas].tamnho >= 0){
+                //     for (int i = lim, k = col, j = 0; j < palavras[contColocadas].tamnho; i++, j++, k--){
+                //         if(tabuleiro[i][k].fazPartePalavra == 1 && tabuleiro[i][k].fazPartePalavra != palavras[contColocadas].palavra[j]){
+                //             aprovado = 0;
+                //             break;
+                //         }
+                //     }
+
+                //     if(aprovado == 1 && palavras[contColocadas].marcado == 0){
+                        
+                //         for (int i = lim, k = col, j = 0; j < palavras[contColocadas].tamnho; i++, j++, k--){
+                //             tabuleiro[i][k].fazPartePalavra = 1;
+                //             tabuleiro[i][k].marcadoUsuario = 0;
+                //         }
+                //         contColocadas++;
+                //     }
+
+                //     if(aprovado == 1 && palavras[contColocadas].marcado == 1){
+                        
+                //         for (int i = lim, k = col, j = 0; j < palavras[contColocadas].tamnho; i++, j++, k--){
+                //             tabuleiro[i][k].fazPartePalavra = 1;
+                //             tabuleiro[i][k].marcadoUsuario = 1;
+                //         }
+                //         contColocadas++;
+                //     }
+                //     aprovado = 1;
+                // }
 
             }
-            
+            if(teste == 1){
+                teste = 0;
+                break;
+            }
         }
         
     }
+    printf("\n");
+    printf("  ");
+    for (int i = 0; i < tamCol; i++)
+        printf(BLUE("%c "), 'A'+ i);
+
+    printf("\n");
+
+    for (int i = 0; i < tamLin; i++){
+        printf(BLUE("%c "), 'A'+ i);
+        for (int j = 0; j < tamCol; j++){
+            if(tabuleiro[i][j].fazPartePalavra == 1){
+                printf(BOLD(RED("%c ")), tabuleiro[i][j].caractere);
+            }
+            else
+                printf("%c ", tabuleiro[i][j].caractere);
+        }       
+        printf("\n");        
+    } 
+
+    printf("\n");
+    
+    printf("  ");
+    for (int i = 0; i < tamCol; i++)
+        printf(BLUE("%c "), 'A'+ i);
+
+    printf("\n");
+
+    for (int i = 0; i < tamLin; i++){
+        printf(BLUE("%c "), 'A'+ i);
+        for (int j = 0; j < tamCol; j++){
+            if(tabuleiro[i][j].marcadoUsuario == 1){
+                printf(BOLD(YELLOW("%c ")), tabuleiro[i][j].caractere);
+            }
+            else
+                printf("%c ", tabuleiro[i][j].caractere);
+        }       
+        printf("\n");        
+    }
+    
+    scanf("%i", &aprovado);
     
 }
 
