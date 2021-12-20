@@ -13,6 +13,9 @@
 #include <time.h>
 #include <unistd.h>
 
+#include "Headers/structs.h"
+#include "Headers/outros.h"
+#include "Headers/jogar.h"
 #include "Headers/criaTabuleiro.h"
 
 

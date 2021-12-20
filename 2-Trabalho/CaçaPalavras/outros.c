@@ -14,6 +14,7 @@
 
 #include "Headers/structs.h"
 #include "Headers/cores.h"
+#include "Headers/outros.h"
 
 
 void printResolvido(int tamLin, int tamCol, Item **tabuleiro, int escolha){

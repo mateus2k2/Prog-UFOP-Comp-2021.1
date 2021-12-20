@@ -1,4 +1,3 @@
-#include "Headers/structs.h"
 
 void menu();
 void menuDificuldade();

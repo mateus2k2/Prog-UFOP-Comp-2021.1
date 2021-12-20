@@ -14,10 +14,11 @@
 #include <time.h>
 #include <unistd.h>
 
+#include "Headers/structs.h"
+#include "Headers/continuarJogo.h"
 #include "Headers/menus.h"
 #include "Headers/cores.h"
-#include "Headers/structs.h"
-
+#include "Headers/criaTabuleiro.h"
 
 
 void menu(){

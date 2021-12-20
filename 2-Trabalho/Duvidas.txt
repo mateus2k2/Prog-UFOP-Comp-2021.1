@@ -17,3 +17,4 @@ locate do codigo e enconding
 Validar e verificar arquivo do save
 
 gcc *.c -o main
+./main

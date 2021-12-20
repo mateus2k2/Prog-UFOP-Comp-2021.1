@@ -12,6 +12,9 @@
 #include <unistd.h>
 
 #include "Headers/structs.h"
+#include "Headers/jogar.h"
+#include "Headers/continuarJogo.h"
+#include "Headers/outros.h"
 
 void jogar(Palavra *palavras ,Item **tabuleiro, int tamLin, int tamCol, int quantidade){
     

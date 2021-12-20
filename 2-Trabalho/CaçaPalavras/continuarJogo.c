@@ -17,6 +17,9 @@
 #include <unistd.h>
 
 #include "Headers/structs.h"
+#include "Headers/continuarJogo.h"
+#include "Headers/jogar.h"
+#include "Headers/outros.h"
 
 
 void salvaJogo(int quantidade, int tamLin, int tamCol, Item **tabuleiro, Palavra *palavras, char nomeArquivoSave[]){

@@ -20,7 +20,7 @@ typedef struct{
     int limF, colF;
 }Comando;
 
-// typedef struct{
-//     int limC, colC;
-//     int limF, colF;
-// }Coordenada;
+typedef struct{
+    int limC, colC;
+    int limF, colF;
+}Coordenada;
