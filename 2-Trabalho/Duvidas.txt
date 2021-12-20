@@ -15,3 +15,5 @@ realloc palavras coso uma palavra seja rejeitada
 Alocar palavras do dicionário dinamicamente (realloc)
 locate do codigo e enconding
 Validar e verificar arquivo do save
+
+gcc *.c -o main
