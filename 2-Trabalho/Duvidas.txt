@@ -4,37 +4,15 @@ Ordenar cada as palavras (menor para a maior)
 Verificar Razão entre numero de palavras e tamanho da matriz (offset na hora de escolhar colocar ou nao a capavra)
 
 MELHORAR 
-Conferir e testar as direcoes
+Mudar nome e limpar algumas variaveis
 Lixo lendo arquivos (\n depois da quantidade de palavra)
-Inicializar tabuleiro[i][k].marcadoUsuario = 0 no coloca palavra
-Implementar sair em qualquer lugar
-Função sair do jogo free em tudo
-Função Instrucoes
-Função resolveTabuleiroSaveGame
-
-MELHORAR
-Ler nome do arquivo do usuario (dicionario, restore) (com .txt e sem)
-Implementar nome arquivo na função save
-Comando save (manter escrita original e colcoar txt no final caraceres especiasi) 
-
-MELHORAR
-Grid colorido igual o do PDF (Mudar o fundo)
+Mudar o fundo e tabela
 Struct coodernada
-Sgmentation foult uma vez
+Palavras com, acento e repetidas (Realloc)
 Arquivos .h e .c
 
 EXTRA CHECKS
-Erro caso palavra seja impossivel de caber no tabuleiro (maior que lim ou col) (realloc)
-Palavras podem ter espaço, acento, 1 letra e repetidas (Criar jogo)
+realloc palavras coso uma palavra seja rejeitada
 Alocar palavras do dicionario dinamicamente (realloc)
 Palavra com acento no codigo
-        
-ARQUIVOS
-Menus
-Criar Tababuleiro
-Continurar Jogo
-Jogar
-Main
-
-tabuleiro[lim][i].fazPartePalavra != palavras[*contColocadas].palavra[j]
-colcoa palavra e resolveTabuleiroSaveGame
+Validar e verificar arquivo do save

@@ -73,6 +73,7 @@ void example() {
     printf(BOLD(RED("vermelho negrito!")) "\n");
     printf(BLUE("azul!") "\n");
     printf(GREEN("verde!") "\n");
+    printf(YELLOW("amarelo!") "\n");
     printf(CYAN(BOLD("ciano negrito!")) "\n");
     printf(BOLD("negrito!") "\n");
     printf("texto normal\n");
