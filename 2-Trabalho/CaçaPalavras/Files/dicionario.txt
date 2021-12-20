@@ -1,14 +1,8 @@
-20 20
-12
+19 13
+6
 atletico
 campeao
+ganhou
+ganhou
 brasileiro
 galo
-ganhou
-mateus
-filipe
-teste
-moreira
-silva
-brasil
-harmanico

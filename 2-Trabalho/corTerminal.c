@@ -53,7 +53,7 @@
 #define TAB_TR  "\u2513" // ┓ (top-right)
 #define TAB_MR  "\u252B" // ┫ (middle-right)
 #define TAB_BR  "\u251B" // ┛ (bottom-right)
- 
+
 
 /* 
  * Funcao que imprime um exemplo de uso das cores e tabelas 
