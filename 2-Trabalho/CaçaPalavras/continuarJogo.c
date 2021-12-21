@@ -64,21 +64,23 @@ void continuaJogo(){
 
     //------------------------------------------------------------------------
 
-    char *nomeArquivo;
-    nomeArquivo = malloc(100 * sizeof(char));
+    // char *nomeArquivo;
+    // nomeArquivo = malloc(100 * sizeof(char));
 
-    if(nomeArquivo == NULL){
-        printf("Erro");
-        return;
-    }
+    // if(nomeArquivo == NULL){
+    //     printf("Erro");
+    //     return;
+    // }
 
-    FILE *save;  
+    // FILE *save;  
    
-    leNomeArquivo(&nomeArquivo);
-    if(strcmp(nomeArquivo, "SAIR") == 0)
-        return;
-    save = fopen(nomeArquivo, "r");
-    free(nomeArquivo);
+    // leNomeArquivo(&nomeArquivo);
+    // if(strcmp(nomeArquivo, "SAIR") == 0)
+    //     return;
+    // save = fopen(nomeArquivo, "r");
+    // free(nomeArquivo);
+
+    FILE *save = fopen("Files/save.txt", "r");
 
     //------------------------------------------------------------------------
 

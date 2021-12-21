@@ -63,10 +63,6 @@ void menu(){
     }
 }
 
-void menuDificuldade(){
-    //menu
-}
-
 void printInstrucoes(){
 
     Item tabuleiro[11][11] = 

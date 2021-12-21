@@ -37,21 +37,27 @@ void criarJogo(){
     int totalLetrasPalavras = 0, TotalTamanhoTabuleiro = 0;
     double razao;
 
-    char *nomeArquivo;
-    nomeArquivo = malloc(100 * sizeof(char));
+    //--------------------------------------------------------------------------------
 
-    if(nomeArquivo == NULL){
-        printf("Erro");
-        return;
-    }
+    // char *nomeArquivo;
+    // nomeArquivo = malloc(100 * sizeof(char));
 
-    FILE *dicionario;  
+    // if(nomeArquivo == NULL){
+    //     printf("Erro");
+    //     return;
+    // }
+
+    // FILE *dicionario;  
    
-    leNomeArquivo(&nomeArquivo);
-    if(strcmp(nomeArquivo, "SAIR") == 0)
-        return;
-    dicionario = fopen(nomeArquivo, "r");
-    free(nomeArquivo);
+    // leNomeArquivo(&nomeArquivo);
+    // if(strcmp(nomeArquivo, "SAIR") == 0)
+    //     return;
+    // dicionario = fopen(nomeArquivo, "r");
+    // free(nomeArquivo);
+
+    FILE *dicionario = fopen("Files/dicionario.txt", "r");
+
+    //--------------------------------------------------------------------------------
 
     fscanf(dicionario, "%i %i", &tamLin, &tamCol);
     TotalTamanhoTabuleiro = tamLin * tamCol;
@@ -72,7 +78,6 @@ void criarJogo(){
         printf("\nErro.");
         return;
     }
-
 
     //---------------------------------------------------------------------------------------------
 
@@ -106,6 +111,9 @@ void criarJogo(){
         return;
     }
 
+    //---------------------------------------------------------------------------------------------
+
+
     for (int i = 0; i < quantidade; i++){
         fgets(palavras[i].palavra, 100, dicionario);
 
@@ -124,6 +132,9 @@ void criarJogo(){
             totalLetrasPalavras = totalLetrasPalavras + palavras[i].tamanho;
     } 
 
+    //---------------------------------------------------------------------------------------------
+
+
     //Verifica se tem repetidas
     for(int i = 0; i < quantidade; i++){
         for(int j = i+1; j < quantidade; j++){
@@ -137,6 +148,8 @@ void criarJogo(){
             }
         }   
     }
+
+    //---------------------------------------------------------------------------------------------
 
     //sort palavras
     for(int i = 0; i < quantidade-1; i++){
@@ -153,6 +166,8 @@ void criarJogo(){
         }    
     }
 
+    //---------------------------------------------------------------------------------------------
+
     for (int i = 0; i < quantidade; i++){
         for (int j = 0; j < palavras[i].tamanho; j++){
             if(palavras[i].palavra[j] >= 'a' && palavras[i].palavra[j] <= 'z')
@@ -160,13 +175,20 @@ void criarJogo(){
         }        
     } 
 
+    //---------------------------------------------------------------------------------------------
+
     razao = (double)totalLetrasPalavras / (double)TotalTamanhoTabuleiro;
+
+    //---------------------------------------------------------------------------------------------
 
     if(razao > 1){
         printf("Muitas palavras para o tabuleiro. ");
         sairJogo(tabuleiro, palavras, tamLin);
         return;
     }
+
+    //---------------------------------------------------------------------------------------------
+
 
     if(palavras[0].tamanho > tamLin || palavras[0].tamanho > tamCol)
         modoSemRegulacaoDirecao = 1;
@@ -184,6 +206,9 @@ void criarJogo(){
             tabuleiro[l][k].marcadoUsuario = 0;
         }       
     }
+
+    //---------------------------------------------------------------------------------------------
+
 
     while (1){
 
