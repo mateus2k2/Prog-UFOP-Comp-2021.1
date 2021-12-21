@@ -1,20 +1,18 @@
-MELHORAR CRIAR TABULEIRO
-Timeout na criação do tabuleiro (pode ter muitas palavras para um tabuleiro muito pequeno)
-Ordenar cada as palavras (menor para a maior)
-Verificar Razão entre numero de palavras e tamanho da matriz (offset na hora de escolher colocar ou nao a palavra)
-
 MELHORAR 
+Timeout na criação do tabuleiro (pode ter muitas palavras para um tabuleiro muito pequeno ou imposivel de coloca palavra na dada dificuladade)
 Lixo lendo arquivos (\n depois da quantidade de palavra)
-Achar cor melhor de fundo
+Palavras com acento no imput e terminal
 Struct coodernada
-Palavras com, acento e repetidas no imput
-Arquivos .h e .c
 
 EXTRA CHECKS
 realloc palavras coso uma palavra seja rejeitada
 Alocar palavras do dicionário dinamicamente (realloc)
-locate do codigo e enconding
 Validar e verificar arquivo do save
+Caso de arquivo fora da pasta (pode ter "/")
+
+FUNÇÕES EXTRAS
+leNomeArquivo
+menuDificuldade
 
 gcc *.c -o main
 ./main

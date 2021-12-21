@@ -27,73 +27,32 @@ void criarJogo(){
     int tmpTamanho;
 
     int contDirecao[8] = {0};
-    int tabuleiroPronto = 0, verificadoNomeArquivo = 0;
+    int modoSemRegulacaoDirecao = 0;
+    int tabuleiroPronto = 0;
 
-    int tamLin, tamCol, quantidade, dificuldade;
+    int tamLin, tamCol;
+    int quantidade, dificuldade;
     int escolhaDirecao = 0, escolhaColocar, escolhaLetra, contColocadas = 0;
 
     int totalLetrasPalavras = 0, TotalTamanhoTabuleiro = 0;
     double razao;
 
-    char nomeArquivo[100], nomeArquivoTmp[100];
-    FILE *dicionario;
+    char *nomeArquivo;
+    nomeArquivo = malloc(100 * sizeof(char));
 
-    // while (1){
-    //     printf("\nDigite o nome do arquivo: ");
-    //     while (verificadoNomeArquivo == 0){
-    //         fgets(nomeArquivo, 100, stdin);
-    //         nomeArquivo[strlen(nomeArquivo)-1] = '\0';
+    if(nomeArquivo == NULL){
+        printf("Erro");
+        return;
+    }
 
-    //         for (int i = 0; i < strlen(nomeArquivo); i++){
-    //             if((nomeArquivo[i] >= 'a' && nomeArquivo[i] <= 'z'))
-    //                 nomeArquivoTmp[i] = nomeArquivo[i]-32;
-
-    //             else if(nomeArquivo[i] != '/')
-    //                 nomeArquivoTmp[i] = nomeArquivo[i];
-                
-    //             else{
-    //                 verificadoNomeArquivo = 0;
-    //                 break;
-    //             }
-
-    //             if(i == strlen(nomeArquivo) - 1){
-    //                 verificadoNomeArquivo = 1;
-    //                 nomeArquivoTmp[strlen(nomeArquivo)] = '\0';
-    //             }
-    //         }        
-
-    //         if(strcmp(nomeArquivoTmp,"SAIR") == 0)
-    //             return;
-            
-    //         if(verificadoNomeArquivo == 0)
-    //             printf("Nome do arquivo invalido. Tente Novamente: ");
-    //     }    
-
-
-    //     tmpTamanho = strlen(nomeArquivoTmp);
-    //     if(nomeArquivoTmp[tmpTamanho-1] != 'T' && nomeArquivoTmp[tmpTamanho-2] != 'X' && nomeArquivoTmp[tmpTamanho-3] != 'T' && nomeArquivoTmp[tmpTamanho-4] != '.'){
-    //         nomeArquivo[tmpTamanho] = '.';
-    //         nomeArquivo[tmpTamanho+1] = 't';
-    //         nomeArquivo[tmpTamanho+2] = 'x';
-    //         nomeArquivo[tmpTamanho+3] = 't';
-    //         nomeArquivo[tmpTamanho+4] = '\0';
-    //     }
-
-    //     dicionario = fopen(nomeArquivo, "r");
-
-    //     //---------------------------------------------------------------------------------------------
-        
-    //     printf("Abrindo \"%s\"...\n", nomeArquivo);
-    //     if(dicionario == NULL){
-    //         printf("\nErro ao abrir arquivo..");
-    //         verificadoNomeArquivo = 0;
-    //     }
-    //     else
-    //         break;
-
-    // }   
+    FILE *dicionario;  
    
-    dicionario = fopen("Files/dicionario.txt", "r");
+    leNomeArquivo(&nomeArquivo);
+    if(strcmp(nomeArquivo, "SAIR") == 0)
+        return;
+    dicionario = fopen(nomeArquivo, "r");
+    free(nomeArquivo);
+
     fscanf(dicionario, "%i %i", &tamLin, &tamCol);
     TotalTamanhoTabuleiro = tamLin * tamCol;
 
@@ -209,6 +168,9 @@ void criarJogo(){
         return;
     }
 
+    if(palavras[0].tamanho > tamLin || palavras[0].tamanho > tamCol)
+        modoSemRegulacaoDirecao = 1;
+
     //---------------------------------------------------------------------------------------------
     
     for (int i = 0; i < 8; i++)
@@ -223,10 +185,7 @@ void criarJogo(){
         }       
     }
 
-    double contTentativas = 0;
-
     while (1){
-        contTentativas = contTentativas + 1;
 
         for (int i = 0; i < tamLin; i++){
             for (int j = 0; j < tamCol; j++){
@@ -240,7 +199,11 @@ void criarJogo(){
                         colocaPalavra(escolhaDirecao, &contColocadas, i, j, tamLin, tamCol, palavras, tabuleiro, contDirecao);
                     }
 
-                    if(quantidade == contColocadas && contDirecao[0] != 0 && contDirecao [1] != 0){
+                    if((quantidade == contColocadas && contDirecao[0] != 0 && contDirecao [1] != 0) && quantidade >= 2){
+                        tabuleiroPronto = 1;
+                        break;
+                    }
+                    else if((quantidade == contColocadas && quantidade < 2) || (quantidade == contColocadas && modoSemRegulacaoDirecao == 1)){
                         tabuleiroPronto = 1;
                         break;
                     }
@@ -255,7 +218,11 @@ void criarJogo(){
                         colocaPalavra(escolhaDirecao, &contColocadas, i, j, tamLin, tamCol, palavras, tabuleiro, contDirecao);
                     }
 
-                    if(quantidade == contColocadas && contDirecao[0] != 0 && contDirecao [1] != 0 && contDirecao[2] != 0){
+                    if((quantidade == contColocadas && contDirecao[0] != 0 && contDirecao [1] != 0 && contDirecao[2] != 0) && quantidade >= 3){
+                        tabuleiroPronto = 1;
+                        break;
+                    }
+                    else if((quantidade == contColocadas && quantidade < 3) || (quantidade == contColocadas && modoSemRegulacaoDirecao == 1)){
                         tabuleiroPronto = 1;
                         break;
                     }
@@ -271,6 +238,10 @@ void criarJogo(){
                     }
 
                     if(quantidade == contColocadas && contDirecao[0] != 0 && contDirecao [1] != 0 && contDirecao[2] != 0 && contDirecao[7] != 0){
+                        tabuleiroPronto = 1;
+                        break;
+                    }
+                    else if((quantidade == contColocadas && quantidade < 4) || (quantidade == contColocadas && modoSemRegulacaoDirecao == 1)){
                         tabuleiroPronto = 1;
                         break;
                     }

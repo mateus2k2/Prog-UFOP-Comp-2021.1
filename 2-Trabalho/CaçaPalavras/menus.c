@@ -89,53 +89,54 @@ void printInstrucoes(){
 
     printf("\n-------------------------------------------------------------------------\n");
 
-    printf("\nOPCOES MENU");
+    printf(BG_BLACK(WHITE(BOLD("OPCOES MENU"))));
     printf("\n1-Começar Novo Jogo: Escolha a dificuldade e Digite o nome do arquivo de dicionario. Comece a jogar");
     printf("\n2-Continuar Jogo Existente: Digite o nome do arquivo para leitura. Comece a jogar");
-    printf("\n3-Instrucoes: O Menu Atual\n");
+    printf("\n3-Instrucoes: O Menu Atual\n\n");
 
-    printf("\nCOMANDOS MARCAR");
+    printf(BG_BLACK(WHITE(BOLD("COMANDOS MARCAR"))));
     printf("\nDigite \"marcar\" seguido na coordenada desejada.");
     printf("\nA coordenada deve estar dentro no tabuleiro.");
     printf("\nNao deixo espaço no final.");
     printf("\nCoordenada deve ser em letras.");
     printf("\nPode ser em caixa alta ou não");
-    printf("\nModelo: Marcar AB CD\n");
+    printf("\nModelo: Marcar AB CD\n\n");
 
-    printf("\nCOMANDOS SALVAR");
+    printf(BG_BLACK(WHITE(BOLD("COMANDOS SALVAR"))));
     printf("\nDigite \"salvar\" seguido do nome do arquivo desejado.");
     printf("\nCaso voce nao coloque \".txt\" no final do nome do arquivo ele sera adicioando automaticamente");
     printf("\nPode estar em caixa alta ou nao");
-    printf("\nModelo: Salvar teste.txt\n");
+    printf("\nModelo: Salvar teste.txt\n\n");
 
-    printf("\nCOMANDOS RESOLVER");
+    printf(BG_BLACK(WHITE(BOLD("COMANDOS RESOLVER"))));
     printf("\nDigite apenas \"resolver\".");
     printf("\nA resposta sera mostrada");
     printf("\nO programa sera encerrado");
     printf("\nPode estar em caixa alta ou nao");
-    printf("\nModelo: Resolver\n");
+    printf("\nModelo: Resolver\n\n");
 
-    printf("\nCOMANDOS SAIR");
+    printf(BG_BLACK(WHITE(BOLD("COMANDOS SAIR"))));
     printf("\nDigite apenas \"sair\".");
     printf("\nPrograma se encerra sem salvar");
     printf("\nPode estar em caixa alta ou nao");
-    printf("\nModelo: Sair\n");
+    printf("\nModelo: Sair\n\n");
 
-    printf("\nTABULEIRO EXEMPLO\n");
+    printf(BG_BLACK(WHITE(BOLD("TABULEIRO EXEMPLO"))) "\n\n");
     printTabuleiroInstrucao(11, 11, tabuleiro, 2);
 
-    printf("\nAZUL: Apenas Auxilio. Não faz Parte do Tabuleiro (Se a acumulam a cada dificuldade)");
-    printf("\nCOR VERDE: dificuldade 1");
-    printf("\nCOR AMARELO: dificuldade 2");
-    printf("\nCOR VERMELHO: dificuldade 3\n");
+    printf("\n" BOLD(BG_BLACK(BOLD(BLUE("AZUL")))) ": Apenas Auxilio. Não faz Parte do Tabuleiro");
+    printf("\n" BOLD(BG_BLACK(BOLD(GREEN("VERDE")))) ": dificuldade 1");
+    printf("\n" BOLD(BG_BLACK(BOLD(YELLOW("AMARELO")))) ": dificuldade 2");
+    printf("\n" BOLD(BG_BLACK(BOLD(RED("VERMELHO")))) ": dificuldade 3");
+    printf("\nSe a acumulam a cada dificuldade\n\n");
 
-    printf("\nO JOGO ENCERRA CASO: ");
+    printf(BG_BLACK(WHITE(BOLD("O JOGO ENCERRA CASO"))));
     printf("\nSeja digitado sair");
     printf("\nTodas as palavras sejam marcadas");
-    printf("\nSeja digitado resolver\n");
+    printf("\nSeja digitado resolver\n\n");
 
 
-    printf("\nOUTROS");
+    printf(BG_BLACK(WHITE(BOLD("OUTROS"))));
     printf("\nO caractere \"/\" eh proibido para nome de arquivo.");
     printf("\nExistem mais cacteres proibidos no windows e eles nao sao verificados.");
     printf("\nPodem ocorrer erros no windows.");
@@ -160,7 +161,7 @@ void printTabuleiroInstrucao(int tamLin, int tamCol, Item tabuleiro[11][11], int
 
     printf(BG_BLACK("   "));
     for (int i = 0; i < tamCol; i++)
-        printf(BG_BLACK(TAB_VER BLUE(" %c ")), 'A'+ i);
+        printf(BOLD(BG_BLACK(TAB_VER BLUE(" %c "))), 'A'+ i);
 
     printf(BG_BLACK(TAB_VER));
 
@@ -180,21 +181,21 @@ void printTabuleiroInstrucao(int tamLin, int tamCol, Item tabuleiro[11][11], int
 
 
     for (int i = 0; i < tamLin; i++){
-        printf(BG_BLACK(TAB_VER BLUE(" %c ")), 'A'+ i);
+        printf(BOLD(BG_BLACK(TAB_VER BLUE(" %c "))), 'A'+ i);
         for (int j = 0; j < tamCol; j++){
 
             if(escolha == 2 && tabuleiro[i][j].dificuldade == 1){
-                    printf(BG_BLACK(TAB_VER BOLD(GREEN(" %c "))), tabuleiro[i][j].caractere);
+                    printf(BOLD(BG_BLACK(TAB_VER BOLD(GREEN(" %c ")))), tabuleiro[i][j].caractere);
             }
             else if(escolha == 2 && tabuleiro[i][j].dificuldade == 2){
-                printf(BG_BLACK(TAB_VER BOLD(YELLOW(" %c "))), tabuleiro[i][j].caractere);
+                printf(BOLD(BG_BLACK(TAB_VER BOLD(YELLOW(" %c ")))), tabuleiro[i][j].caractere);
             }
             else if(escolha == 2 && tabuleiro[i][j].dificuldade == 3){
-                printf(BG_BLACK(TAB_VER BOLD(RED(" %c "))), tabuleiro[i][j].caractere);
+                printf(BOLD(BG_BLACK(TAB_VER BOLD(RED(" %c ")))), tabuleiro[i][j].caractere);
             }
     
             else
-                printf(BG_BLACK(TAB_VER " %c "), tabuleiro[i][j].caractere);
+                printf(BOLD(BG_BLACK(TAB_VER " %c ")), tabuleiro[i][j].caractere);
         }  
         printf(BG_BLACK(TAB_VER));
 

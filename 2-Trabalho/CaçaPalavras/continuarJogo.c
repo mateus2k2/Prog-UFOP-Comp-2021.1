@@ -60,68 +60,27 @@ void continuaJogo(){
     Palavra *palavras;
 
     char tmp;
-    char nomeArquivo[100], nomeArquivoTmp[100];
-    int tamanhoTmp, verificado = 0;
     int tamLin, tamCol, quantidade;
 
-    FILE *save;
+    //------------------------------------------------------------------------
 
-    // while (1){
-    //     printf("\nDigite o nome do arquivo: ");
-    //     while (verificado == 0){
-    //         fgets(nomeArquivo, 100, stdin);
-    //         nomeArquivo[strlen(nomeArquivo)-1] = '\0';
+    char *nomeArquivo;
+    nomeArquivo = malloc(100 * sizeof(char));
 
-    //         for (int i = 0; i < strlen(nomeArquivo); i++){
-    //             if((nomeArquivo[i] >= 'a' && nomeArquivo[i] <= 'z'))
-    //                 nomeArquivoTmp[i] = nomeArquivo[i]-32;
+    if(nomeArquivo == NULL){
+        printf("Erro");
+        return;
+    }
 
-    //             else if(nomeArquivo[i] != '/')
-    //                 nomeArquivoTmp[i] = nomeArquivo[i];
-                
-    //             else{
-    //                 verificado = 0;
-    //                 break;
-    //             }
+    FILE *save;  
+   
+    leNomeArquivo(&nomeArquivo);
+    if(strcmp(nomeArquivo, "SAIR") == 0)
+        return;
+    save = fopen(nomeArquivo, "r");
+    free(nomeArquivo);
 
-    //             if(i == strlen(nomeArquivo) - 1){
-    //                 verificado = 1;
-    //                 nomeArquivoTmp[strlen(nomeArquivo)] = '\0';
-    //             }
-    //         }        
-
-    //         if(strcmp(nomeArquivoTmp,"SAIR") == 0)
-    //             return;
-            
-    //         if(verificado == 0)
-    //             printf("Nome do arquivo invalido. Tente Novamente: ");
-    //     }    
-
-
-    //     tamanhoTmp = strlen(nomeArquivoTmp);
-    //     if(nomeArquivoTmp[tamanhoTmp-1] != 'T' && nomeArquivoTmp[tamanhoTmp-2] != 'X' && nomeArquivoTmp[tamanhoTmp-3] != 'T' && nomeArquivoTmp[tamanhoTmp-4] != '.'){
-    //         nomeArquivo[tamanhoTmp] = '.';
-    //         nomeArquivo[tamanhoTmp+1] = 't';
-    //         nomeArquivo[tamanhoTmp+2] = 'x';
-    //         nomeArquivo[tamanhoTmp+3] = 't';
-    //         nomeArquivo[tamanhoTmp+4] = '\0';
-    //     }
-
-    //     save = fopen(nomeArquivo, "r");
-
-    //     //---------------------------------------------------------------------------------------------
-        
-    //     printf("Abrindo \"%s\"...\n", nomeArquivo);
-    //     if(save == NULL){
-    //         printf("\nErro ao abrir arquivo..");
-    //         verificado = 0;
-    //     }
-    //     else
-    //         break;
-
-    // }  
-
-    save = fopen("Files/save.txt", "r");
+    //------------------------------------------------------------------------
 
     fscanf(save, "%i %i", &tamLin, &tamCol);
     tabuleiro = (Item**)malloc(tamLin*sizeof(Item*));

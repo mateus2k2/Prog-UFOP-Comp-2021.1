@@ -11,6 +11,7 @@
 #include <time.h>
 #include <unistd.h>
 
+
 #include "Headers/cores.h"
 #include "Headers/structs.h"
 
@@ -27,7 +28,8 @@
 int main(int argc, char *argv[ ]){
     time_t t;   
     srand((unsigned) time(&t));
-    setlocale(LC_ALL,"");
+    setlocale(LC_ALL,"Portuguese_Brasil");
+    
 
     printf("Bem vindo ao Caça Palavras");
     menu();
@@ -36,3 +38,4 @@ int main(int argc, char *argv[ ]){
 
     return 0;
 }
+
