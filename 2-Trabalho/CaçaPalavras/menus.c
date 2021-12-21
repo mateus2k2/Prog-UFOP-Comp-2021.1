@@ -1,6 +1,3 @@
-// void menu();
-// void menuDificuldade();
-// void printInstrucoes();
 #include <assert.h>
 #include <ctype.h>
 #include <locale.h>
@@ -133,10 +130,8 @@ void printInstrucoes(){
 
 
     printf(BG_BLACK(WHITE(BOLD("OUTROS"))));
-    printf("\nO caractere \"/\" eh proibido para nome de arquivo.");
-    printf("\nExistem mais cacteres proibidos no windows e eles nao sao verificados.");
-    printf("\nPodem ocorrer erros no windows.");
-    printf("\nNo jogo, as palavras marcadas serão amarelas e se escolher resolver, elas ficarão vermelhas\n");
+    printf("\nNo jogo, as palavras marcadas serão amarelas e se escolher resolver, elas ficarão vermelhas");
+    printf("\nPara nomes de arquivos, os caracteres '<' '>' ':' '\"' '|' '?' '*' Sao proibidos\n");
     
     printf("\n-------------------------------------------------------------------------\n\n");
     

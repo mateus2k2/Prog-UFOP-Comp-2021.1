@@ -1,4 +1,3 @@
-
 #include <assert.h>
 #include <ctype.h>
 #include <locale.h>
@@ -121,7 +120,7 @@ void leNomeArquivo(char *nomeArquivo[]){
                 if(((*nomeArquivo)[i] >= 'a' && (*nomeArquivo)[i] <= 'z'))
                     nomeArquivoTmp[i] = (*nomeArquivo)[i]-32;
 
-                else if((*nomeArquivo)[i] != '/')
+                else if((*nomeArquivo)[i] != '<' && (*nomeArquivo)[i] != '>' && (*nomeArquivo)[i] != ':' && (*nomeArquivo)[i] != '|' && (*nomeArquivo)[i] != '?' && (*nomeArquivo)[i] != '*' && (*nomeArquivo)[i] != '"')
                     nomeArquivoTmp[i] = (*nomeArquivo)[i];
                 
                 else{

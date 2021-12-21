@@ -1,34 +1,32 @@
-20 20
-R O X O B P B Z B R A S I L E I R O T P 
-U F P M I T T I X D I Q R H F U Y I T N 
-K V O K V K D C M W R J D J V M C O H Z 
-T E R N N W H O F B B P W P B T B E A Q 
-C O Z E Z U T B K P C F T U S J Q A R X 
-B Y M Z P N S R T P J V F I D F E W M Q 
-M L V H F I A T L E T I C O S F X M A S 
-D H O K R T L V P A N D L K L S A D N S 
-M K L I U D N I R L L U S B H L U Y I M 
-Y O C L I C F I F V B U F O J B U Z C L 
-M G R A H P S C P D E Q G F B I I H O Q 
-E W R E M C N E B T S B N A V X R P Z G 
-U P W V I P F G A Y R N U P N F U N L V 
-V D L K F R E M A A D U Z Z P H Z V E I 
-V D V Q U W A A S I M G O X T T O A Q G 
-L V A M U S K I O R G K A C A Q A U H L 
-K T S Y S L L Y N L G V G J N D B Z Z S 
-Q F T E S T E L G M L Q H R Q Z E K Y T 
-V G U C P J H S K I K D N P R Z U W K C 
-K H T R Y J T E S T Y R Z G A L O C J N 
-12
+25 25
+L T V G N I R U A C B R A S I L E I R O E X R T M 
+S L K D P F O K A U Z K O T K S E O S E E P H L I 
+U P H O I T G V E J N L Y Z L U Z X K S K C W A X 
+B F O K Q W E F D S Q Z A L F K A Q K A D E Z A R 
+R A T L E T I C O D I E J P I C H H C V O O V E Y 
+V J F U J Y O W R E J M Z B S C L X L A H P I Q U 
+D E I Y K J W T Q Q C O G A C K J T L M O N X N B 
+A W S K M M N S X N C I L V A C Z O K C X X L T I 
+A J W Z W Z B U R L G G A Y M O C N Z Z N D Y B O 
+A A N O T V Q C T P A G R U P C C S D C V T E I U 
+D V A E Y Q E A D U U A K Y E C B K V X W X C O C 
+E L X L G U Q S U U Q N B R A X N N I N H M Q U H 
+O S G Q A J W U I H S H Y K O U D I V W Z T L N D 
+Y W P P L W F J C V U O R Q W B I A Z T Z V Y J R 
+U J M F O R F W G W N U B Y G Y S W S K U T T U U 
+O V P M H I I Q W P Q N W M V T B Z W B I V V E N 
+G A G Z W C P S R D Z C L R Y C J M Y X H T B J Q 
+C R N A X A G X I H T K Y N D B O F O H E Q Q Q Q 
+Q Z M R I E V B R V Y R D X Z K T L I G O L X U Z 
+E Y R X Q I N R W G C A B D R Z E K C B L P W W Z 
+F K L C G M I G E F W O U Q K C S M G V D F Z N J 
+D A A Z W C E I P I P B R X H Y W V V M H X E T D 
+B Y K D N W G N W H L A O U P W L T P I A O G Y L 
+S F I W B O A B Y D P W L E V U Q V I M L H Z G Y 
+J G O Q E Z I M K H N Y H O Y M F V Z M Q T E N E 
+5
 BRASILEIRO -- --
-HARMANICO -- --
 ATLETICO -- --
-MOREIRA -- --
 CAMPEAO -- --
-FILIPE -- --
 GANHOU -- --
-BRASIL -- --
-MATEUS -- --
-TESTE -- --
-SILVA -- --
 GALO -- --

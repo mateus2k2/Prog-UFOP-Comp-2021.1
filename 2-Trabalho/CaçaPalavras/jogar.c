@@ -448,7 +448,7 @@ Comando interpretaComando(char comandoCompleto[]){
                     break;
                 }
 
-                if((comandoCompleto[i] == '/')){
+                if((comandoCompleto[i] == '<') || (comandoCompleto[i] == '>') || (comandoCompleto[i] == ':') || (comandoCompleto[i] == '"') || (comandoCompleto[i] == '|') || (comandoCompleto[i] == '?') || (comandoCompleto[i] == '*')){
                     comando.numeroComando = 0;
                     return comando;
                 }

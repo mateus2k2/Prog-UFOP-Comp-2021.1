@@ -2,7 +2,6 @@ MELHORAR
 Timeout na criação do tabuleiro (pode ter muitas palavras para um tabuleiro muito pequeno ou imposivel de coloca palavra na dada dificuladade)
 Lixo lendo arquivos (\n depois da quantidade de palavra)
 Palavras com acento no imput e terminal
-Caso de arquivo fora da pasta (pode ter "/")
 Struct coodernada
 
 EXTRA CHECKS
@@ -16,3 +15,5 @@ Menus
 
 gcc *.c -o main
 ./main
+Fazer mais testes
+Mechar no windows
