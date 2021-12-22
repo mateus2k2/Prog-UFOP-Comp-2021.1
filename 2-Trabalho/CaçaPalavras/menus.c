@@ -1,15 +1,11 @@
-#include <assert.h>
-#include <ctype.h>
-#include <locale.h>
-#include <math.h>
-#include <setjmp.h>
-#include <signal.h>
-#include <stdarg.h>
+//Nome: Mateus Filipe Moreira Silva
+//Matrícula: 2114156
+//Turma  41
+
+#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
-#include <unistd.h>
 
 #include "Headers/structs.h"
 #include "Headers/continuarJogo.h"
@@ -20,16 +16,17 @@
 
 void menu(){
 
-    int escolha;
+    //Menu principal
+    
     char escolhaChar[20];
 
     printf("\nO que deseja fazer:\n");
 
     printf("\n1.  Comecar um novo jogo");
-    printf("\n2.  Continuar um novo jogo");
-    printf("\n3.  Instrucoes do jogo\n\n");
+    printf("\n2.  Continuar um jogo");
+    printf("\n3.  Instruções do jogo\n\n");
 
-    printf("Escolha a opcao (digite ”sair” em qualquer lugar para sair do jogo): ");
+    printf("Escolha a opção (digite ”sair” em qualquer lugar para sair do jogo): ");
     while (strcmp(escolhaChar,"1") != 0 || strcmp(escolhaChar,"2") != 0 && strcmp(escolhaChar,"3") != 0 && strcmp(escolhaChar,"SAIR") != 0){
         fgets(escolhaChar, 20, stdin);
         escolhaChar[strlen(escolhaChar)-1] = '\0';
@@ -50,17 +47,59 @@ void menu(){
         }
         else if(strcmp(escolhaChar,"3") == 0){
             printInstrucoes();
-            printf("Vistas as instruções oque deseja fazer? ");
+            printf("Vistas as instruções o que deseja fazer? ");
         }
         else if(strcmp(escolhaChar,"SAIR") == 0){
             return;
         }
         else
-            printf("Opcao Invalida. Tente Novamente: ");
+            printf("Opção Invalida. Tente Novamente: ");
+    }
+}
+
+int menuDificuldade(){
+
+    //Menu de dificuldades
+    
+    char escolhaChar[20];
+
+    printf("\nDigite o nível de dificuldade:\n");
+
+    printf("\n1.  Fácil");
+    printf("\n2.  Médio");
+    printf("\n3.  Difícil\n\n");
+
+    printf("Escolha a opção: ");
+    while (strcmp(escolhaChar,"1") != 0 || strcmp(escolhaChar,"2") != 0 && strcmp(escolhaChar,"3") != 0 && strcmp(escolhaChar,"SAIR") != 0){
+        fgets(escolhaChar, 20, stdin);
+        escolhaChar[strlen(escolhaChar)-1] = '\0';
+
+        for (int i = 0; i < strlen(escolhaChar); i++){
+            if(escolhaChar[i] >= 'a' && escolhaChar[i] <= 'z')
+                escolhaChar[i] = escolhaChar[i]-32;
+        }        
+
+        if(strcmp(escolhaChar,"1") == 0){
+            return 1;
+        }
+        
+        else if(strcmp(escolhaChar,"2") == 0){
+            return 2;
+        }
+        else if(strcmp(escolhaChar,"3") == 0){
+            return 3;
+        }
+        else if(strcmp(escolhaChar,"SAIR") == 0){
+            return 0;
+        }
+        else
+            printf("Opção Invalida. Tente Novamente: ");
     }
 }
 
 void printInstrucoes(){
+
+//Inicializa matriz tabuleiro de demostração
 
     Item tabuleiro[11][11] = 
 {
@@ -82,10 +121,10 @@ void printInstrucoes(){
 
     printf("\n-------------------------------------------------------------------------\n");
 
-    printf(BG_BLACK(WHITE(BOLD("OPCOES MENU"))));
-    printf("\n1-Começar Novo Jogo: Escolha a dificuldade e Digite o nome do arquivo de dicionario. Comece a jogar");
+    printf(BG_BLACK(WHITE(BOLD("OPÇÕES MENU"))));
+    printf("\n1-Começar Novo Jogo: Escolha a dificuldade e Digite o nome do arquivo de dicionário. Comece a jogar");
     printf("\n2-Continuar Jogo Existente: Digite o nome do arquivo para leitura. Comece a jogar");
-    printf("\n3-Instrucoes: O Menu Atual\n\n");
+    printf("\n3-Instruções: O Menu Atual\n\n");
 
     printf(BG_BLACK(WHITE(BOLD("COMANDOS MARCAR"))));
     printf("\nDigite \"marcar\" seguido na coordenada desejada.");
@@ -131,13 +170,18 @@ void printInstrucoes(){
 
     printf(BG_BLACK(WHITE(BOLD("OUTROS"))));
     printf("\nNo jogo, as palavras marcadas serão amarelas e se escolher resolver, elas ficarão vermelhas");
-    printf("\nPara nomes de arquivos, os caracteres '<' '>' ':' '\"' '|' '?' '*' Sao proibidos\n");
+    printf("\nPara nomes de arquivos, os caracteres '<' '>' ':' '\"' '|' '?' '*' Sao proibidos");
+    printf("\nCaracteres especiais no immput como 'ç' ou 'á' não são recomendados\n");
+
     
     printf("\n-------------------------------------------------------------------------\n\n");
     
 }
 
 void printTabuleiroInstrucao(int tamLin, int tamCol, Item tabuleiro[11][11], int escolha){
+
+    //Mesma lógica do printResolvido
+    //Muda apenas o tipo do parametro tabuleiro e a cor do prints 
 
     printf(BG_BLACK(TAB_TL));
     for (int i = 0; i < tamCol+1; i++){
@@ -152,7 +196,7 @@ void printTabuleiroInstrucao(int tamLin, int tamCol, Item tabuleiro[11][11], int
 
     printf(BG_BLACK("   "));
     for (int i = 0; i < tamCol; i++)
-        printf(BOLD(BG_BLACK(TAB_VER BLUE(" %c "))), 'A'+ i);
+        printf(BG_BLACK(TAB_VER BOLD(BLUE(" %c "))), 'A'+ i);
 
     printf(BG_BLACK(TAB_VER));
 
@@ -172,21 +216,21 @@ void printTabuleiroInstrucao(int tamLin, int tamCol, Item tabuleiro[11][11], int
 
 
     for (int i = 0; i < tamLin; i++){
-        printf(BOLD(BG_BLACK(TAB_VER BLUE(" %c "))), 'A'+ i);
+        printf(BG_BLACK(TAB_VER BOLD(BLUE(" %c "))), 'A'+ i);
         for (int j = 0; j < tamCol; j++){
 
             if(escolha == 2 && tabuleiro[i][j].dificuldade == 1){
-                    printf(BOLD(BG_BLACK(TAB_VER BOLD(GREEN(" %c ")))), tabuleiro[i][j].caractere);
+                    printf(BG_BLACK(TAB_VER BOLD(GREEN(" %c "))), tabuleiro[i][j].caractere);
             }
             else if(escolha == 2 && tabuleiro[i][j].dificuldade == 2){
-                printf(BOLD(BG_BLACK(TAB_VER BOLD(YELLOW(" %c ")))), tabuleiro[i][j].caractere);
+                printf(BG_BLACK(TAB_VER BOLD(YELLOW(" %c "))), tabuleiro[i][j].caractere);
             }
             else if(escolha == 2 && tabuleiro[i][j].dificuldade == 3){
-                printf(BOLD(BG_BLACK(TAB_VER BOLD(RED(" %c ")))), tabuleiro[i][j].caractere);
+                printf(BG_BLACK(TAB_VER BOLD(RED(" %c "))), tabuleiro[i][j].caractere);
             }
     
             else
-                printf(BOLD(BG_BLACK(TAB_VER " %c ")), tabuleiro[i][j].caractere);
+                printf(BG_BLACK(TAB_VER BOLD(WHITE(" %c "))), tabuleiro[i][j].caractere);
         }  
         printf(BG_BLACK(TAB_VER));
 

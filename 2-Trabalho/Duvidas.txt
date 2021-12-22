@@ -1,19 +1,21 @@
 MELHORAR 
-Timeout na criação do tabuleiro (pode ter muitas palavras para um tabuleiro muito pequeno ou imposivel de coloca palavra na dada dificuladade)
+Timeout na criação do tabuleiro (pode ter muitas palavras para um tabuleiro muito pequeno ou impossível de coloca palavra na dada dificuldade)
+Casos impossíveis de se encaixar todas as palavras
 Lixo lendo arquivos (\n depois da quantidade de palavra)
-Palavras com acento no imput e terminal
+Erro de português e melhorar comentários 
+
 Struct coodernada
+Caracteres proibidos nos nomes dos arquivos
+Multiple characters in a character constant
+Não da pra volta no terminal
 
 EXTRA CHECKS
 realloc palavras coso uma palavra seja rejeitada
 Alocar palavras do dicionário dinamicamente (realloc)
-Validar e verificar arquivo do save
-
-FUNÇÕES EXTRAS
-Modularizar
-Menus
+Nome de arquivos mais que 100
 
 gcc *.c -o main
 ./main
-Fazer mais testes
-Mechar no windows
+
+Files/dicionario.txt
+Files/save.txt

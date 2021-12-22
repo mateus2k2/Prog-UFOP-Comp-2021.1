@@ -9,7 +9,7 @@ palavra[strlen(palavra)-1] = '\0';
 //Remover \n do input do teclado
 while ((getchar()) != '\n');
 
-//Alocaçao Dinamica
+//Alocação Dinamica
 int *vet = malloc(n * sizeof(int)); 
 int *vet = calloc(n * sizeof(int)); //Inicializa com 0
 

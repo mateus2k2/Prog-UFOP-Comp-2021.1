@@ -1,3 +1,7 @@
+//Nome: Mateus Filipe Moreira Silva
+//Matrícula: 2114156
+//Turma  41
+
 typedef struct{
     char palavra[100];
     int marcado;
