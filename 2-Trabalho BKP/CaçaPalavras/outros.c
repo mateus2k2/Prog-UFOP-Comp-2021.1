@@ -50,13 +50,15 @@ void printResolvido(int tamLin, int tamCol, Item **tabuleiro, int escolha){
 
 
     for (int i = 0; i < tamLin; i++){
+        //Print dos caracteres de referência na vertical (um a cada inicio da linha)
         printf(BG_BLACK (TAB_VER BOLD(BLUE(" %c "))), 'A'+ i);
         for (int j = 0; j < tamCol; j++){
+            //Interpreta se é para printar a resolução ou apenas as palavras ja marcadas
             if(tabuleiro[i][j].fazPartePalavra == 1 && escolha == 1){
                 printf(BG_BLACK(TAB_VER BOLD(RED(" %c "))), tabuleiro[i][j].caractere);
             }
             else if(tabuleiro[i][j].marcadoUsuario == 1 && escolha == 0){
-                printf(BG_BLACK(TAB_VER BOLD(MAGENTA(" %c "))), tabuleiro[i][j].caractere);
+                printf(BG_BLACK(TAB_VER BOLD(YELLOW(" %c "))), tabuleiro[i][j].caractere);
             }
             
             else
@@ -64,6 +66,7 @@ void printResolvido(int tamLin, int tamCol, Item **tabuleiro, int escolha){
         }  
         printf(BOLD(BG_BLACK(TAB_VER)));
 
+        //Se for a ultima linha print a união entre o fim da tabela com a parte de baixo da tabela
         if(i != tamLin - 1){     
 
             printf("\n");
@@ -83,6 +86,7 @@ void printResolvido(int tamLin, int tamCol, Item **tabuleiro, int escolha){
 
     //----------------------------------------------------------------------
 
+    //Parte de baixo da tabela
     printf(BG_BLACK(TAB_BL));
     for (int i = 0; i < tamCol+1; i++){
         if(i != tamCol)

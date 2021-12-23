@@ -39,11 +39,9 @@ int main(int argc, char *argv[ ]){
     //Seta a localização do código para Portuguese do Brasil
     setlocale(LC_ALL,"Portuguese_Brasil");
 
-
     printf("Bem vindo ao Caça Palavras");
     //Chama o menu principal
     menu();
-    
 
     printf("\n");
 
