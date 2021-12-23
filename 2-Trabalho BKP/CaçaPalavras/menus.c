@@ -169,7 +169,7 @@ void printInstrucoes(){
 
 
     printf(BG_BLACK(WHITE(BOLD("OUTROS"))));
-    printf("\nNo jogo, as palavras marcadas serão amarelas e se escolher resolver, elas ficarão vermelhas");
+    printf("\nNo jogo, as palavras marcadas serão na cor magenta e se escolher resolver, elas ficarão vermelhas");
     printf("\nPara nomes de arquivos, os caracteres '<' '>' ':' '\"' '|' '?' '*' Sao proibidos");
     printf("\nCaracteres especiais no immput como 'ç' ou 'á' não são recomendados\n");
 

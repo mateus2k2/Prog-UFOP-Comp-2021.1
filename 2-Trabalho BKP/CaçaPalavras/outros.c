@@ -58,7 +58,7 @@ void printResolvido(int tamLin, int tamCol, Item **tabuleiro, int escolha){
                 printf(BG_BLACK(TAB_VER BOLD(RED(" %c "))), tabuleiro[i][j].caractere);
             }
             else if(tabuleiro[i][j].marcadoUsuario == 1 && escolha == 0){
-                printf(BG_BLACK(TAB_VER BOLD(YELLOW(" %c "))), tabuleiro[i][j].caractere);
+                printf(BG_BLACK(TAB_VER BOLD(MAGENTA(" %c "))), tabuleiro[i][j].caractere);
             }
             
             else
