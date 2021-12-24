@@ -28,4 +28,3 @@ typedef struct{
     int limC, colC;
     int limF, colF;
 }Coordenada;
-

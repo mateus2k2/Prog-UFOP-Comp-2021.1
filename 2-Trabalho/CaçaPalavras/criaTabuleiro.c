@@ -137,7 +137,7 @@ void criarJogo(){
 
     //---------------------------------------------------------------------------------------------
 
-    //Se a malha for composta ele terá um espaço (atletico mineiro)
+    //Se a palavra for composta ele terá um espaço (atletico mineiro)
     //Esse espaço é removido e substituído por um '-' para evitar problemas
     for (int i = 0; i < quantidade; i++){
         for (int j = 0; j < palavras[i].tamanho; j++){
@@ -297,11 +297,12 @@ void criarJogo(){
                         colocaPalavra(escolhaDirecao, &contColocadas, i, j, tamLin, tamCol, palavras, tabuleiro, contDirecao);
                     }
 
-                    if(quantidade == contColocadas && contDirecao[0] != 0 && contDirecao [1] != 0 && contDirecao[2] != 0 && contDirecao[7] != 0){
+                    if(quantidade == contColocadas && contDirecao[0] != 0 && contDirecao [1] != 0 && contDirecao[2] != 0 && contDirecao[3] != 0 &&
+                                                      contDirecao[4] != 0 && contDirecao [5] != 0 && contDirecao[6] != 0){
                         tabuleiroPronto = 1;
                         break;
                     }
-                    else if((quantidade == contColocadas && quantidade < 4) || (quantidade == contColocadas && modoSemRegulacaoDirecao == 1)){
+                    else if((quantidade == contColocadas && quantidade < 7) || (quantidade == contColocadas && modoSemRegulacaoDirecao == 1)){
                         tabuleiroPronto = 1;
                         break;
                     }
