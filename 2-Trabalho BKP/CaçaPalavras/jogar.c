@@ -23,7 +23,7 @@ void jogar(Palavra *palavras ,Item **tabuleiro, int tamLin, int tamCol, int quan
     printf("\n");
 
     //Print o estado atual do tabuleiro como parametro 0 no final para mostrar apenas os ja marcados
-    printResolvido(tamLin, tamCol, tabuleiro, 0);
+    printTabuleiro(tamLin, tamCol, tabuleiro, 0);
 
     //---------------------------------------------------------------------------------------------
  
@@ -97,7 +97,7 @@ void jogar(Palavra *palavras ,Item **tabuleiro, int tamLin, int tamCol, int quan
         //Resolver
         else if(comando.numeroComando == 3){
             //Print o tabuleiro resolvido chamando a função com parametro 1 no final para mostrar todas as  palavras
-            printResolvido(tamLin, tamCol, tabuleiro, 1);
+            printTabuleiro(tamLin, tamCol, tabuleiro, 1);
             sairJogo(tabuleiro, palavras, tamLin);
             printf("\nPena que nao conseguiu resolver, tchau!");
             return;
@@ -114,7 +114,7 @@ void jogar(Palavra *palavras ,Item **tabuleiro, int tamLin, int tamCol, int quan
         printf("\n");    
 
         //Print o estado atual do tabuleiro como parametro 0 no final para mostrar apenas os ja marcados
-        printResolvido(tamLin, tamCol, tabuleiro, 0);
+        printTabuleiro(tamLin, tamCol, tabuleiro, 0);
 
         //Caso por algum motivo se tenha restaurado o jogo e todas as palavras ja estiverem marcadas estão se encerra o jogo    
         if(encontradas == quantidade){

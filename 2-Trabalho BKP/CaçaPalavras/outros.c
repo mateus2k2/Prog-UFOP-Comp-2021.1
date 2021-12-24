@@ -12,7 +12,7 @@
 #include "Headers/outros.h"
 
 
-void printResolvido(int tamLin, int tamCol, Item **tabuleiro, int escolha){
+void printTabuleiro(int tamLin, int tamCol, Item **tabuleiro, int escolha){
 
     //Primeira parte da tabela
     printf(BG_BLACK(TAB_TL));

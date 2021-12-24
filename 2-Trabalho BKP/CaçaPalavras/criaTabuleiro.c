@@ -137,7 +137,7 @@ void criarJogo(){
 
     //---------------------------------------------------------------------------------------------
 
-    //Se a malha for composta ele terá um espaço (atletico mineiro)
+    //Se a palavra for composta ele terá um espaço (atletico mineiro)
     //Esse espaço é removido e substituído por um '-' para evitar problemas
     for (int i = 0; i < quantidade; i++){
         for (int j = 0; j < palavras[i].tamanho; j++){

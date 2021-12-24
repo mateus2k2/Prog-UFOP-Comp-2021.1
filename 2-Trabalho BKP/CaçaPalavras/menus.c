@@ -180,7 +180,7 @@ void printInstrucoes(){
 
 void printTabuleiroInstrucao(int tamLin, int tamCol, Item tabuleiro[11][11], int escolha){
 
-    //Mesma lógica do printResolvido
+    //Mesma lógica do printTabuleiro
     //Muda apenas o tipo do parametro tabuleiro e a cor do prints 
 
     printf(BG_BLACK(TAB_TL));
