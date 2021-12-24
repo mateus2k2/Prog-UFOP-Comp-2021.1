@@ -34,8 +34,6 @@ https://drive.google.com/file/d/1y0W3b0VhI0C-oZtJ_MS-pLWpd9RxScYb/view
 */
 
 
-
-
 int main(int argc, char *argv[ ]){
     
     //Gera uma seed aleatória baseada no tempo
