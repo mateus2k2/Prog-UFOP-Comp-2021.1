@@ -1,0 +1,13 @@
+Bom dia, então para explicar meu tabalho eu resolvi fazer esse flowchart, vou usar ele juntaente com o código para explicar, vai ser uma explicação bem geral por conta do tempo, esta tudo melhor explicado nos comentaios do codigo.
+
+Do lado tempo essa imagem das direções em cada nivel e as numeroção, eu uso essa convenção diversas vezes no código, tem o link dessas imagem comentadas no codigo
+
+Antes de mais nada eu tenho o arquivo structs.h com a declaração de 3 structs. Palavra Item e Comando, que eu irei ultilizar durante todo o codigo
+
+Então començando pelo main, eu chamo a função menu, nela eu utilizo um fgets e a strcmp para verificar a opção e chamar as funções, o programa ja pode se encerra nesse ponto caso seja digitado sair tambem. 
+
+Então encolhendo a opção 1, criar jogo, tem função de mesmo nome no arquivo cria tabuleiro. Nela eu leio o nome do arquivo por meio da função le nome arquivo, que faz alguns testes e so sair quando e digitado um nome de arquivo valido ou seja diigtado sair. Depois disso é feita a leitrua do arquivo e a alocação de uma matriz de 'item' e um veotr de 'palavra'. E feita uma verificação nas palavra, conversão e caso tenha-se algum problema nos mallocs ou algum outro erro, o probrama se encerra. Depois disso a função coloca palavra e chamada de acondo com a dificuldade, e dependendo do numero da direção passada por parametro e a posição do começo é verificado se é posivle pocolar e a palavra, isso e feita ate que o tabuleiro seja completo.
+
+Voltando para o menu, a opção 2 de continuar um jogo, chama a função de mesmo nome, nela é lido o nome do arquivo e depois as timenções e o tabuleiro é lido do arquivo e depois a quantidade de palavras e as palavras em si, junto com as coordenadas (se existir). Depois disso é presiso descobrir onde estão as palavras e utiliza-se a funlção desolve tabuleiro para isso, virificando cada possição do tabuleiro em cada direção possivel pelas palavras, ela tambem returna um inteiro 1 caso nem todas as palavras sejam encontradas e retorna um erro.
+
+Depois disso vamo para a função jogar onde é impresso o tabuleiro macado com as plavras ja encontras com a função printTabuleiro com o ultimo parametro igual a 0, depois disso se le o comando com um fgets 

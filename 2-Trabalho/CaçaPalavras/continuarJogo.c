@@ -27,7 +27,7 @@ void salvaJogo(int quantidade, int tamLin, int tamCol, Item **tabuleiro, Palavra
         return;
     }
 
-    //FILE *save = fopen("Files/save.txt", "r");
+    //FILE *save = fopen("Files/save.txt", "w");
 
     //----------------------------------------------------------------------
 
@@ -197,11 +197,9 @@ void continuaJogo(){
                 tmp = tmp - 32;
             palavras[i].colF = tmp - 'A';
             
-            //Marca a palavra
             fscanf(save, "%c", &tmp);
-            //Se estiver minúscula converte para maiúscula
-            if(tmp >= 'a' && tmp <= 'z')
-                tmp = tmp - 32;
+ 
+            //Marca a palavra            
             palavras[i].marcado = 1;
         }
         else{

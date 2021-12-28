@@ -19,3 +19,8 @@ gcc *.c -o main
 
 Files/dicionario.txt
 Files/save.txt
+
+typedef struct{
+    int limC, colC;
+    int limF, colF;
+}Coordenada;

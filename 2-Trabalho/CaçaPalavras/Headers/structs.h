@@ -24,7 +24,3 @@ typedef struct{
     int limF, colF;
 }Comando;
 
-typedef struct{
-    int limC, colC;
-    int limF, colF;
-}Coordenada;
