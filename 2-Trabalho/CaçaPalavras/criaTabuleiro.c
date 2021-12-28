@@ -298,11 +298,11 @@ void criarJogo(){
                     }
 
                     if(quantidade == contColocadas && contDirecao[0] != 0 && contDirecao [1] != 0 && contDirecao[2] != 0 && contDirecao[3] != 0 &&
-                                                      contDirecao[4] != 0 && contDirecao [5] != 0 && contDirecao[6] != 0){
+                                                      contDirecao[4] != 0 && contDirecao [5] != 0 && contDirecao[6] != 0 && contDirecao[8] != 0){
                         tabuleiroPronto = 1;
                         break;
                     }
-                    else if((quantidade == contColocadas && quantidade < 7) || (quantidade == contColocadas && modoSemRegulacaoDirecao == 1)){
+                    else if((quantidade == contColocadas && quantidade < 8) || (quantidade == contColocadas && modoSemRegulacaoDirecao == 1)){
                         tabuleiroPronto = 1;
                         break;
                     }

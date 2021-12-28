@@ -14,6 +14,9 @@ realloc palavras coso uma palavra seja rejeitada
 Alocar palavras do dicionário dinamicamente (realloc)
 Nome de arquivos mais que 100
 
+
+
+
 gcc *.c -o main
 ./main
 
